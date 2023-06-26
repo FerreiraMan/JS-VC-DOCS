@@ -1,0 +1,48 @@
+.noteBoxes
+{
+	border: 1px solid;
+  	border-radius: 5px;
+	padding: 10px;
+	margin: 10px 0px;
+	width: 100%;
+    padding-top: 5px;
+}
+
+.type1
+{
+	border-color: #E76F51;
+	background-color: rgba(231, 111, 81, 0.1); 
+}
+
+.type2
+{
+	border-color: #2A9D8F;
+	background-color: rgba(42, 157, 143, 0.1); 
+}
+
+.type3
+{
+	border-color: #0096C7;
+	background-color: rgba(0, 150, 199, 0.1); 
+}
+
+.type4
+{
+	border-color: #00B353;
+	background-color: rgba(0, 179, 83, 0.1); 
+}
+
+.picture
+{
+	width: 17px; 
+	padding-right: 10px;
+    padding-top: 10px;
+}
+
+.picture1
+{
+	width: 25px; 
+	padding-right: 10px;
+    padding-top: 10px;
+    filter: invert(46%) sepia(90%) saturate(291%) hue-rotate(123deg) brightness(93%) contrast(101%);
+}
