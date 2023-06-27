@@ -459,7 +459,9 @@ paths:
             url = "https://vendor-api-staging.jumia.com/shops"
 
             payload = ""
-            headers = {"Authorization": "Bearer "}
+            headers = {
+                "Authorization": "Bearer "
+            }
 
             response = requests.request("GET", url, data=payload, headers=headers)
 
@@ -468,6 +470,7 @@ paths:
           source: | 
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://vendor-api-staging.jumia.com/shops"))
+                .header("cookie", "__cf_bm=jlHJP1oJ54kGp7iXuEH.U45tJ5F_yBcYVtuP1DYbg2A-1687860165-0-Ad7my33EtWDSyUxW0M%2FzOqz%2FZpyKdCfTQEbcq4TL0UvSBpjzjUrRjRDH7taHjK56Ofednrv6af9imX%2BYzYvQppQ%3D")
                 .header("Authorization", "Bearer ")
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
@@ -705,7 +708,9 @@ paths:
             url = "https://vendor-api-staging.jumia.com/shops-of-master-shop"
 
             payload = ""
-            headers = {"Authorization": ""}
+            headers = {
+                "Authorization": "Bearer "
+            }
 
             response = requests.request("GET", url, data=payload, headers=headers)
 
@@ -714,7 +719,8 @@ paths:
           source: | 
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://vendor-api-staging.jumia.com/shops-of-master-shop"))
-                .header("Authorization", "")
+                .header("cookie", "__cf_bm=jlHJP1oJ54kGp7iXuEH.U45tJ5F_yBcYVtuP1DYbg2A-1687860165-0-Ad7my33EtWDSyUxW0M%2FzOqz%2FZpyKdCfTQEbcq4TL0UvSBpjzjUrRjRDH7taHjK56Ofednrv6af9imX%2BYzYvQppQ%3D")
+                .header("Authorization", "Bearer ")
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
@@ -735,7 +741,7 @@ paths:
 
               req, _ := http.NewRequest("GET", url, nil)
 
-              req.Header.Add("Authorization", "")
+              req.Header.Add("Authorization", "Bearer ")
 
               res, _ := http.DefaultClient.Do(req)
 
@@ -762,7 +768,7 @@ paths:
               CURLOPT_CUSTOMREQUEST => "GET",
               CURLOPT_POSTFIELDS => "",
               CURLOPT_HTTPHEADER => [
-                "Authorization: "
+                "Authorization: Bearer "
               ],
             ]);
 
@@ -775,7 +781,7 @@ paths:
               echo "cURL Error #:" . $err;
             } else {
               echo $response;
-            } 
+            }
   /catalog/brands:
     get:
       summary: Get Brands
@@ -884,48 +890,23 @@ paths:
 
             url = "https://vendor-api-staging.jumia.com/catalog/brands"
 
-            query = {
-              "page": "1"
+            payload = ""
+            headers = {
+                "Authorization": "Bearer "
             }
 
-            headers = {"Authorization": "string"}
+            response = requests.request("GET", url, data=payload, headers=headers)
 
-            response = requests.get(url, headers=headers, params=query)
-
-            data = response.json()
-            print(data)
+            print(response.text)
         - lang: 'java'
           source: | 
-            import java.net.*;
-            import java.net.http.*;
-            import java.util.*;
-            import java.nio.charset.StandardCharsets;
-            import java.util.stream.Collectors;
-
-            public class App {
-              public static void main(String[] args) throws Exception {
-                var httpClient = HttpClient.newBuilder().build();
-
-                HashMap<String, String> params = new HashMap<>();
-                params.put("page", "1");
-
-                var query = params.keySet().stream()
-                  .map(key -> key + "=" + URLEncoder.encode(params.get(key), StandardCharsets.UTF_8))
-                  .collect(Collectors.joining("&"));
-
-                var host = "https://vendor-api-staging.jumia.com";
-                var pathname = "/catalog/brands";
-                var request = HttpRequest.newBuilder()
-                  .GET()
-                  .uri(URI.create(host + pathname + '?' + query))
-                  .header("Authorization", "string")
-                  .build();
-
-                var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-                System.out.println(response.body());
-              }
-            }
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://vendor-api-staging.jumia.com/catalog/brands"))
+                .header("Authorization", "Bearer ")
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
         - lang: 'go'
           source: | 
             package main
@@ -937,49 +918,49 @@ paths:
             )
 
             func main() {
-              reqUrl := "https://vendor-api-staging.jumia.com/catalog/brands"
-              req, _ := http.NewRequest("GET", reqUrl, nil)
 
-              query := req.URL.Query()
-              query.Add("page", "1")
-              req.URL.RawQuery = query.Encode()
+              url := "https://vendor-api-staging.jumia.com/catalog/brands"
 
-              req.Header.Add("Authorization", "string")
+              req, _ := http.NewRequest("GET", url, nil)
+
+              req.Header.Add("Authorization", "Bearer ")
+
               res, _ := http.DefaultClient.Do(req)
+
               defer res.Body.Close()
               body, _ := ioutil.ReadAll(res.Body)
 
               fmt.Println(res)
               fmt.Println(string(body))
+
             }
         - lang: 'php'
           source: | 
-            /**
-            * Requires libcurl
-            */
-
-            $query = array(
-              "page" => "1"
-            );
+            <?php
 
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_HTTPHEADER => [
-                "Authorization: string"
-              ],
-              CURLOPT_URL => "https://vendor-api-staging.jumia.com/catalog/brands?" . http_build_query($query),
+              CURLOPT_URL => "https://vendor-api-staging.jumia.com/catalog/brands",
               CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "GET",
+              CURLOPT_POSTFIELDS => "",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer "
+              ],
             ]);
 
             $response = curl_exec($curl);
-            $error = curl_error($curl);
+            $err = curl_error($curl);
 
             curl_close($curl);
 
-            if ($error) {
-              echo "cURL Error #:" . $error;
+            if ($err) {
+              echo "cURL Error #:" . $err;
             } else {
               echo $response;
             }
@@ -1112,50 +1093,23 @@ paths:
 
             url = "https://vendor-api-staging.jumia.com/catalog/categories"
 
-            query = {
-              "page": "1",
-              "attributeSetName": "string"
+            payload = ""
+            headers = {
+                "Authorization": "Bearer "
             }
 
-            headers = {"Authorization": "string"}
+            response = requests.request("GET", url, data=payload, headers=headers)
 
-            response = requests.get(url, headers=headers, params=query)
-
-            data = response.json()
-            print(data)
+            print(response.text)
         - lang: 'java'
           source: | 
-            import java.net.*;
-            import java.net.http.*;
-            import java.util.*;
-            import java.nio.charset.StandardCharsets;
-            import java.util.stream.Collectors;
-
-            public class App {
-              public static void main(String[] args) throws Exception {
-                var httpClient = HttpClient.newBuilder().build();
-
-                HashMap<String, String> params = new HashMap<>();
-                params.put("page", "1");
-                params.put("attributeSetName", "string");
-
-                var query = params.keySet().stream()
-                  .map(key -> key + "=" + URLEncoder.encode(params.get(key), StandardCharsets.UTF_8))
-                  .collect(Collectors.joining("&"));
-
-                var host = "https://vendor-api-staging.jumia.com";
-                var pathname = "/catalog/categories";
-                var request = HttpRequest.newBuilder()
-                  .GET()
-                  .uri(URI.create(host + pathname + '?' + query))
-                  .header("Authorization", "string")
-                  .build();
-
-                var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-                System.out.println(response.body());
-              }
-            }
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://vendor-api-staging.jumia.com/catalog/categories"))
+                .header("Authorization", "Bearer ")
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
         - lang: 'go'
           source: | 
             package main
@@ -1167,51 +1121,49 @@ paths:
             )
 
             func main() {
-              reqUrl := "https://vendor-api-staging.jumia.com/catalog/categories"
-              req, _ := http.NewRequest("GET", reqUrl, nil)
 
-              query := req.URL.Query()
-              query.Add("page", "1")
-              query.Add("attributeSetName", "string")
-              req.URL.RawQuery = query.Encode()
+              url := "https://vendor-api-staging.jumia.com/catalog/categories"
 
-              req.Header.Add("Authorization", "string")
+              req, _ := http.NewRequest("GET", url, nil)
+
+              req.Header.Add("Authorization", "Bearer ")
+
               res, _ := http.DefaultClient.Do(req)
+
               defer res.Body.Close()
               body, _ := ioutil.ReadAll(res.Body)
 
               fmt.Println(res)
               fmt.Println(string(body))
+
             }
         - lang: 'php'
           source: | 
-            /**
-            * Requires libcurl
-            */
-
-            $query = array(
-              "page" => "1",
-              "attributeSetName" => "string"
-            );
+            <?php
 
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_HTTPHEADER => [
-                "Authorization: string"
-              ],
-              CURLOPT_URL => "https://vendor-api-staging.jumia.com/catalog/categories?" . http_build_query($query),
+              CURLOPT_URL => "https://vendor-api-staging.jumia.com/catalog/categories",
               CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "GET",
+              CURLOPT_POSTFIELDS => "",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer "
+              ],
             ]);
 
             $response = curl_exec($curl);
-            $error = curl_error($curl);
+            $err = curl_error($curl);
 
             curl_close($curl);
 
-            if ($error) {
-              echo "cURL Error #:" . $error;
+            if ($err) {
+              echo "cURL Error #:" . $err;
             } else {
               echo $response;
             }
@@ -2125,62 +2077,23 @@ paths:
 
             url = "https://vendor-api-staging.jumia.com/catalog/products"
 
-            query = {
-              "token": "string",
-              "size": "10",
-              "sids": "0",
-              "categoryCode": "0",
-              "createdAtFrom": "2020-09-15",
-              "createdAtTo": "2020-09-15",
-              "sellerSku": "string",
-              "shopId": "497f6eca-6276-4993-bfeb-53cbbbba6f08"
+            payload = ""
+            headers = {
+                "Authorization": "Bearer "
             }
 
-            headers = {"Authorization": "string"}
+            response = requests.request("GET", url, data=payload, headers=headers)
 
-            response = requests.get(url, headers=headers, params=query)
-
-            data = response.json()
-            print(data)
+            print(response.text)
         - lang: 'java'
           source: | 
-            import java.net.*;
-            import java.net.http.*;
-            import java.util.*;
-            import java.nio.charset.StandardCharsets;
-            import java.util.stream.Collectors;
-
-            public class App {
-              public static void main(String[] args) throws Exception {
-                var httpClient = HttpClient.newBuilder().build();
-
-                HashMap<String, String> params = new HashMap<>();
-                params.put("token", "string");
-                params.put("size", "10");
-                params.put("sids", "0");
-                params.put("categoryCode", "0");
-                params.put("createdAtFrom", "2020-09-15");
-                params.put("createdAtTo", "2020-09-15");
-                params.put("sellerSku", "string");
-                params.put("shopId", "497f6eca-6276-4993-bfeb-53cbbbba6f08");
-
-                var query = params.keySet().stream()
-                  .map(key -> key + "=" + URLEncoder.encode(params.get(key), StandardCharsets.UTF_8))
-                  .collect(Collectors.joining("&"));
-
-                var host = "https://vendor-api-staging.jumia.com";
-                var pathname = "/catalog/products";
-                var request = HttpRequest.newBuilder()
-                  .GET()
-                  .uri(URI.create(host + pathname + '?' + query))
-                  .header("Authorization", "string")
-                  .build();
-
-                var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-                System.out.println(response.body());
-              }
-            }
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://vendor-api-staging.jumia.com/catalog/products"))
+                .header("Authorization", "Bearer ")
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
         - lang: 'go'
           source: | 
             package main
@@ -2192,63 +2105,49 @@ paths:
             )
 
             func main() {
-              reqUrl := "https://vendor-api-staging.jumia.com/catalog/products"
-              req, _ := http.NewRequest("GET", reqUrl, nil)
 
-              query := req.URL.Query()
-              query.Add("token", "string")
-              query.Add("size", "10")
-              query.Add("sids", "0")
-              query.Add("categoryCode", "0")
-              query.Add("createdAtFrom", "2020-09-15")
-              query.Add("createdAtTo", "2020-09-15")
-              query.Add("sellerSku", "string")
-              query.Add("shopId", "497f6eca-6276-4993-bfeb-53cbbbba6f08")
-              req.URL.RawQuery = query.Encode()
+              url := "https://vendor-api-staging.jumia.com/catalog/products"
 
-              req.Header.Add("Authorization", "string")
+              req, _ := http.NewRequest("GET", url, nil)
+
+              req.Header.Add("Authorization", "Bearer ")
+
               res, _ := http.DefaultClient.Do(req)
+
               defer res.Body.Close()
               body, _ := ioutil.ReadAll(res.Body)
 
               fmt.Println(res)
               fmt.Println(string(body))
+
             }
         - lang: 'php'
           source: | 
-            /**
-            * Requires libcurl
-            */
-
-            $query = array(
-              "token" => "string",
-              "size" => "10",
-              "sids" => "0",
-              "categoryCode" => "0",
-              "createdAtFrom" => "2020-09-15",
-              "createdAtTo" => "2020-09-15",
-              "sellerSku" => "string",
-              "shopId" => "497f6eca-6276-4993-bfeb-53cbbbba6f08"
-            );
+            <?php
 
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_HTTPHEADER => [
-                "Authorization: string"
-              ],
-              CURLOPT_URL => "https://vendor-api-staging.jumia.com/catalog/products?" . http_build_query($query),
+              CURLOPT_URL => "https://vendor-api-staging.jumia.com/catalog/products",
               CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "GET",
+              CURLOPT_POSTFIELDS => "",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer "
+              ],
             ]);
 
             $response = curl_exec($curl);
-            $error = curl_error($curl);
+            $err = curl_error($curl);
 
             curl_close($curl);
 
-            if ($error) {
-              echo "cURL Error #:" . $error;
+            if ($err) {
+              echo "cURL Error #:" . $err;
             } else {
               echo $response;
             }
@@ -2602,38 +2501,25 @@ paths:
             import requests
 
             id = "YOUR_id_PARAMETER"
-            url = "https://vendor-api-staging.jumia.com/catalog/attribute-sets/" + id
+            url = "https://vendor-api-staging.jumia.com/feeds/" + id
 
-            headers = {"Authorization": "string"}
+            payload = ""
+            headers = {
+                "Authorization": "Bearer "
+            }
 
-            response = requests.get(url, headers=headers)
+            response = requests.request("GET", url, data=payload, headers=headers)
 
-            data = response.json()
-            print(data)
+            print(response.text)
         - lang: 'java'
           source: | 
-            import java.net.*;
-            import java.net.http.*;
-            import java.util.*;
-
-            public class App {
-              public static void main(String[] args) throws Exception {
-                var httpClient = HttpClient.newBuilder().build();
-
-                var host = "https://vendor-api-staging.jumia.com";
-                var id = "YOUR_id_PARAMETER";
-                var pathname = "/catalog/attribute-sets/" + id;
-                var request = HttpRequest.newBuilder()
-                  .GET()
-                  .uri(URI.create(host + pathname ))
-                  .header("Authorization", "string")
-                  .build();
-
-                var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-                System.out.println(response.body());
-              }
-            }
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://vendor-api-staging.jumia.com/catalog/attribute-sets/{YOUR_id_PARAMETER}"))
+                .header("Authorization", "Bearer ")
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
         - lang: 'go'
           source: | 
             package main
@@ -2645,42 +2531,49 @@ paths:
             )
 
             func main() {
-              id := "YOUR_id_PARAMETER";
-              reqUrl := "https://vendor-api-staging.jumia.com/catalog/attribute-sets/" + id
-              req, _ := http.NewRequest("GET", reqUrl, nil)
-              req.Header.Add("Authorization", "string")
+
+              url := "https://vendor-api-staging.jumia.com/catalog/attribute-sets/{YOUR_id_PARAMETER}"
+
+              req, _ := http.NewRequest("GET", url, nil)
+
+              req.Header.Add("Authorization", "Bearer ")
+
               res, _ := http.DefaultClient.Do(req)
+
               defer res.Body.Close()
               body, _ := ioutil.ReadAll(res.Body)
 
               fmt.Println(res)
               fmt.Println(string(body))
+
             }
         - lang: 'php'
           source: | 
-            /**
-            * Requires libcurl
-            */
+            <?php
 
-            const id = "YOUR_id_PARAMETER";
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_HTTPHEADER => [
-                "Authorization: string"
-              ],
-              CURLOPT_URL => "https://vendor-api-staging.jumia.com/catalog/attribute-sets/" . id,
+              CURLOPT_URL => "https://vendor-api-staging.jumia.com/catalog/attribute-sets/{YOUR_id_PARAMETER}",
               CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "GET",
+              CURLOPT_POSTFIELDS => "",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer "
+              ],
             ]);
 
             $response = curl_exec($curl);
-            $error = curl_error($curl);
+            $err = curl_error($curl);
 
             curl_close($curl);
 
-            if ($error) {
-              echo "cURL Error #:" . $error;
+            if ($err) {
+              echo "cURL Error #:" . $err;
             } else {
               echo $response;
             }
@@ -2996,36 +2889,21 @@ paths:
             id = "YOUR_id_PARAMETER"
             url = "https://vendor-api-staging.jumia.com/feeds/" + id
 
-            headers = {"Authorization": "string"}
+            payload = ""
+            headers = {"Authorization": "Bearer "}
 
-            response = requests.get(url, headers=headers)
+            response = requests.request("GET", url, data=payload, headers=headers)
 
-            data = response.json()
-            print(data)
+            print(response.text)
         - lang: 'java'
           source: | 
-            import java.net.*;
-            import java.net.http.*;
-            import java.util.*;
-
-            public class App {
-              public static void main(String[] args) throws Exception {
-                var httpClient = HttpClient.newBuilder().build();
-
-                var host = "https://vendor-api-staging.jumia.com";
-                var id = "YOUR_id_PARAMETER";
-                var pathname = "/feeds/" + id;
-                var request = HttpRequest.newBuilder()
-                  .GET()
-                  .uri(URI.create(host + pathname ))
-                  .header("Authorization", "string")
-                  .build();
-
-                var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-                System.out.println(response.body());
-              }
-            }
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://vendor-api-staging.jumia.com/feeds/{YOUR_id_PARAMETER}"))
+                .header("Authorization", "Bearer undefined")
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
         - lang: 'go'
           source: | 
             package main
@@ -3037,42 +2915,49 @@ paths:
             )
 
             func main() {
-              id := "YOUR_id_PARAMETER";
-              reqUrl := "https://vendor-api-staging.jumia.com/feeds/" + id
-              req, _ := http.NewRequest("GET", reqUrl, nil)
-              req.Header.Add("Authorization", "string")
+
+              url := "https://vendor-api-staging.jumia.com/feeds/{YOUR_id_PARAMETER}"
+
+              req, _ := http.NewRequest("GET", url, nil)
+
+              req.Header.Add("Authorization", "Bearer undefined")
+
               res, _ := http.DefaultClient.Do(req)
+
               defer res.Body.Close()
               body, _ := ioutil.ReadAll(res.Body)
 
               fmt.Println(res)
               fmt.Println(string(body))
+
             }
         - lang: 'php'
           source: | 
-            /**
-            * Requires libcurl
-            */
+            <?php
 
-            const id = "YOUR_id_PARAMETER";
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_HTTPHEADER => [
-                "Authorization: string"
-              ],
-              CURLOPT_URL => "https://vendor-api-staging.jumia.com/feeds/" . id,
+              CURLOPT_URL => "https://vendor-api-staging.jumia.com/feeds/{YOUR_id_PARAMETER}",
               CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "GET",
+              CURLOPT_POSTFIELDS => "",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer undefined"
+              ],
             ]);
 
             $response = curl_exec($curl);
-            $error = curl_error($curl);
+            $err = curl_error($curl);
 
             curl_close($curl);
 
-            if ($error) {
-              echo "cURL Error #:" . $error;
+            if ($err) {
+              echo "cURL Error #:" . $err;
             } else {
               echo $response;
             }
@@ -3207,149 +3092,84 @@ paths:
 
             url = "https://vendor-api-staging.jumia.com/feeds/products/stock"
 
-            payload = {
-              "products": [
-                {
-                  "sellerSku": "8682447314708",
-                  "id": "07c390ae-d58a-42a2-8ec6-5051bca18cab",
-                  "stock": 100
-                },
-                {
-                  "sellerSku": "8682447314709",
-                  "id": "07c390ae-d58a-42a2-8ec6-5051bca19cab",
-                  "stock": 50
-                }
-              ]
-            }
+            payload = {"products": [
+                    {
+                        "sellerSku": "string",
+                        "id": "string",
+                        "stock": 0
+                    }
+                ]}
+            headers = {"Authorization": "Bearer "}
 
-            headers = {
-              "Content-Type": "application/json",
-              "Authorization": "string"
-            }
+            response = requests.request("POST", url, json=payload, headers=headers)
 
-            response = requests.post(url, json=payload, headers=headers)
-
-            data = response.json()
-            print(data)
+            print(response.text)
         - lang: 'java'
           source: | 
-            import java.net.*;
-            import java.net.http.*;
-            import java.util.*;
-
-            public class App {
-              public static void main(String[] args) throws Exception {
-                var httpClient = HttpClient.newBuilder().build();
-
-                var payload = String.join("\n"
-                  , "{"
-                  , " \"products\": ["
-                  , "  {"
-                  , "   \"sellerSku\": \"8682447314708\","
-                  , "   \"id\": \"07c390ae-d58a-42a2-8ec6-5051bca18cab\","
-                  , "   \"stock\": 100"
-                  , "  },"
-                  , "  {"
-                  , "   \"sellerSku\": \"8682447314709\","
-                  , "   \"id\": \"07c390ae-d58a-42a2-8ec6-5051bca19cab\","
-                  , "   \"stock\": 50"
-                  , "  }"
-                  , " ]"
-                  , "}"
-                );
-
-                var host = "https://vendor-api-staging.jumia.com";
-                var pathname = "/feeds/products/stock";
-                var request = HttpRequest.newBuilder()
-                  .POST(HttpRequest.BodyPublishers.ofString(payload))
-                  .uri(URI.create(host + pathname ))
-                  .header("Content-Type", "application/json")
-                  .header("Authorization", "string")
-                  .build();
-
-                var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-                System.out.println(response.body());
-              }
-            }
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://vendor-api-staging.jumia.com/feeds/products/stock"))
+                .header("Authorization", "Bearer ")
+                .method("POST", HttpRequest.BodyPublishers.ofString("{\n  \"products\": [\n    {\n      \"sellerSku\": \"string\",\n      \"id\": \"string\",\n      \"stock\": 0\n    }\n  ]\n}"))
+                .build();
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
         - lang: 'go'
           source: | 
             package main
 
             import (
               "fmt"
-              "bytes"
+              "strings"
               "net/http"
               "io/ioutil"
             )
 
             func main() {
-              reqUrl := "https://vendor-api-staging.jumia.com/feeds/products/stock"
-              var data = []byte(`{
-                "products": [
-                  {
-                    "sellerSku": "8682447314708",
-                    "id": "07c390ae-d58a-42a2-8ec6-5051bca18cab",
-                    "stock": 100
-                  },
-                  {
-                    "sellerSku": "8682447314709",
-                    "id": "07c390ae-d58a-42a2-8ec6-5051bca19cab",
-                    "stock": 50
-                  }
-                ]
-              }`)
-              req, _ := http.NewRequest("POST", reqUrl, bytes.NewBuffer(data))
-              req.Header.Add("Content-Type", "application/json")
-              req.Header.Add("Authorization", "string")
+
+              url := "https://vendor-api-staging.jumia.com/feeds/products/stock"
+
+              payload := strings.NewReader("{\n  \"products\": [\n    {\n      \"sellerSku\": \"string\",\n      \"id\": \"string\",\n      \"stock\": 0\n    }\n  ]\n}")
+
+              req, _ := http.NewRequest("POST", url, payload)
+
+              req.Header.Add("Authorization", "Bearer ")
+
               res, _ := http.DefaultClient.Do(req)
+
               defer res.Body.Close()
               body, _ := ioutil.ReadAll(res.Body)
 
               fmt.Println(res)
               fmt.Println(string(body))
+
             }
         - lang: 'php'
           source: | 
-            /**
-            * Requires libcurl
-            */
+            <?php
 
             $curl = curl_init();
 
-            $payload = array(
-              "products" => array(
-                array(
-                  "sellerSku" => "8682447314708",
-                  "id" => "07c390ae-d58a-42a2-8ec6-5051bca18cab",
-                  "stock" => 100
-                ),
-                array(
-                  "sellerSku" => "8682447314709",
-                  "id" => "07c390ae-d58a-42a2-8ec6-5051bca19cab",
-                  "stock" => 50
-                )
-              )
-            );
-
             curl_setopt_array($curl, [
-              CURLOPT_HTTPHEADER => [
-                "Authorization: string",
-                "Content-Type: application/json"
-              ],
-              CURLOPT_POSTFIELDS => json_encode($payload),
               CURLOPT_URL => "https://vendor-api-staging.jumia.com/feeds/products/stock",
               CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => "{\n  \"products\": [\n    {\n      \"sellerSku\": \"string\",\n      \"id\": \"string\",\n      \"stock\": 0\n    }\n  ]\n}",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer "
+              ],
             ]);
 
             $response = curl_exec($curl);
-            $error = curl_error($curl);
+            $err = curl_error($curl);
 
             curl_close($curl);
 
-            if ($error) {
-              echo "cURL Error #:" . $error;
+            if ($err) {
+              echo "cURL Error #:" . $err;
             } else {
               echo $response;
             }
@@ -3624,269 +3444,107 @@ paths:
 
             url = "https://vendor-api-staging.jumia.com/feeds/products/price"
 
-            payload = {
-              "products": [
-                {
-                  "sellerSku": "8682447314708",
-                  "id": "07c390ae-d58a-42a2-8ec6-5051bca18cab",
-                  "category": "1017650 - Fashion / Women's Fashion / Clothing / Dresses",
-                  "price": {
-                    "currency": "EGP",
-                    "value": 62,
-                    "salePrice": {
-                      "value": 55,
-                      "startAt": "2021-08-11 10:30",
-                      "endAt": "2030-08-07 10:30"
-                    }
-                  },
-                  "businessClients": [
+            payload = {"products": [
                     {
-                      "businessClientCode": "jumia-ma",
-                      "price": {
-                        "currency": "EGP",
-                        "value": 62,
-                        "salePrice": {
-                          "value": 55,
-                          "startAt": "2021-08-11 10:30",
-                          "endAt": "2030-08-07 10:30"
-                        }
-                      }
-                    },
-                    {
-                      "businessClientCode": "jumia-dz",
-                      "price": {
-                        "currency": "EGP",
-                        "value": 82,
-                        "salePrice": {
-                          "value": 45,
-                          "startAt": "2021-08-12 10:30",
-                          "endAt": "2030-08-08 10:30"
-                        }
-                      }
+                        "id": "string",
+                        "sellerSku": "string",
+                        "category": 0,
+                        "price": {
+                            "currency": "string",
+                            "value": 0,
+                            "salePrice": {
+                                "value": 0,
+                                "startAt": "string",
+                                "endAt": "string"
+                            }
+                        },
+                        "businessClients": [
+                            {
+                                "businessClientCode": "string",
+                                "price": {
+                                    "currency": "string",
+                                    "value": 0,
+                                    "salePrice": {
+                                        "value": 0,
+                                        "startAt": "string",
+                                        "endAt": "string"
+                                    }
+                                }
+                            }
+                        ]
                     }
-                  ]
-                }
-              ]
-            }
+                ]}
+            headers = {"Authorization": "Bearer "}
 
-            headers = {
-              "Content-Type": "application/json",
-              "Authorization": "string"
-            }
+            response = requests.request("POST", url, json=payload, headers=headers)
 
-            response = requests.post(url, json=payload, headers=headers)
-
-            data = response.json()
-            print(data)
+            print(response.text)
         - lang: 'java'
           source: | 
-            import java.net.*;
-            import java.net.http.*;
-            import java.util.*;
-
-            public class App {
-              public static void main(String[] args) throws Exception {
-                var httpClient = HttpClient.newBuilder().build();
-
-                var payload = String.join("\n"
-                  , "{"
-                  , " \"products\": ["
-                  , "  {"
-                  , "   \"sellerSku\": \"8682447314708\","
-                  , "   \"id\": \"07c390ae-d58a-42a2-8ec6-5051bca18cab\","
-                  , "   \"category\": \"1017650 - Fashion / Women's Fashion / Clothing / Dresses\","
-                  , "   \"price\": {"
-                  , "    \"currency\": \"EGP\","
-                  , "    \"value\": 62,"
-                  , "    \"salePrice\": {"
-                  , "     \"value\": 55,"
-                  , "     \"startAt\": \"2021-08-11 10:30\","
-                  , "     \"endAt\": \"2030-08-07 10:30\""
-                  , "    }"
-                  , "   },"
-                  , "   \"businessClients\": ["
-                  , "    {"
-                  , "     \"businessClientCode\": \"jumia-ma\","
-                  , "     \"price\": {"
-                  , "      \"currency\": \"EGP\","
-                  , "      \"value\": 62,"
-                  , "      \"salePrice\": {"
-                  , "       \"value\": 55,"
-                  , "       \"startAt\": \"2021-08-11 10:30\","
-                  , "       \"endAt\": \"2030-08-07 10:30\""
-                  , "      }"
-                  , "     }"
-                  , "    },"
-                  , "    {"
-                  , "     \"businessClientCode\": \"jumia-dz\","
-                  , "     \"price\": {"
-                  , "      \"currency\": \"EGP\","
-                  , "      \"value\": 82,"
-                  , "      \"salePrice\": {"
-                  , "       \"value\": 45,"
-                  , "       \"startAt\": \"2021-08-12 10:30\","
-                  , "       \"endAt\": \"2030-08-08 10:30\""
-                  , "      }"
-                  , "     }"
-                  , "    }"
-                  , "   ]"
-                  , "  }"
-                  , " ]"
-                  , "}"
-                );
-
-                var host = "https://vendor-api-staging.jumia.com";
-                var pathname = "/feeds/products/price";
-                var request = HttpRequest.newBuilder()
-                  .POST(HttpRequest.BodyPublishers.ofString(payload))
-                  .uri(URI.create(host + pathname ))
-                  .header("Content-Type", "application/json")
-                  .header("Authorization", "string")
-                  .build();
-
-                var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-                System.out.println(response.body());
-              }
-            }
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://vendor-api-staging.jumia.com/feeds/products/price"))
+                .header("Authorization", "Bearer ")
+                .method("POST", HttpRequest.BodyPublishers.ofString("{\n  \"products\": [\n    {\n      \"id\": \"string\",\n      \"sellerSku\": \"string\",\n      \"category\": 0,\n      \"price\": {\n        \"currency\": \"string\",\n        \"value\": 0,\n        \"salePrice\": {\n          \"value\": 0,\n          \"startAt\": \"string\",\n          \"endAt\": \"string\"\n        }\n      },\n      \"businessClients\": [\n        {\n          \"businessClientCode\": \"string\",\n          \"price\": {\n            \"currency\": \"string\",\n            \"value\": 0,\n            \"salePrice\": {\n              \"value\": 0,\n              \"startAt\": \"string\",\n              \"endAt\": \"string\"\n            }\n          }\n        }\n      ]\n    }\n  ]\n}"))
+                .build();
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
         - lang: 'go'
           source: | 
             package main
 
             import (
               "fmt"
-              "bytes"
+              "strings"
               "net/http"
               "io/ioutil"
             )
 
             func main() {
-              reqUrl := "https://vendor-api-staging.jumia.com/feeds/products/price"
-              var data = []byte(`{
-                "products": [
-                  {
-                    "sellerSku": "8682447314708",
-                    "id": "07c390ae-d58a-42a2-8ec6-5051bca18cab",
-                    "category": "1017650 - Fashion / Women's Fashion / Clothing / Dresses",
-                    "price": {
-                      "currency": "EGP",
-                      "value": 62,
-                      "salePrice": {
-                        "value": 55,
-                        "startAt": "2021-08-11 10:30",
-                        "endAt": "2030-08-07 10:30"
-                      }
-                    },
-                    "businessClients": [
-                      {
-                        "businessClientCode": "jumia-ma",
-                        "price": {
-                          "currency": "EGP",
-                          "value": 62,
-                          "salePrice": {
-                            "value": 55,
-                            "startAt": "2021-08-11 10:30",
-                            "endAt": "2030-08-07 10:30"
-                          }
-                        }
-                      },
-                      {
-                        "businessClientCode": "jumia-dz",
-                        "price": {
-                          "currency": "EGP",
-                          "value": 82,
-                          "salePrice": {
-                            "value": 45,
-                            "startAt": "2021-08-12 10:30",
-                            "endAt": "2030-08-08 10:30"
-                          }
-                        }
-                      }
-                    ]
-                  }
-                ]
-              }`)
-              req, _ := http.NewRequest("POST", reqUrl, bytes.NewBuffer(data))
-              req.Header.Add("Content-Type", "application/json")
-              req.Header.Add("Authorization", "string")
+
+              url := "https://vendor-api-staging.jumia.com/feeds/products/price"
+
+              payload := strings.NewReader("{\n  \"products\": [\n    {\n      \"id\": \"string\",\n      \"sellerSku\": \"string\",\n      \"category\": 0,\n      \"price\": {\n        \"currency\": \"string\",\n        \"value\": 0,\n        \"salePrice\": {\n          \"value\": 0,\n          \"startAt\": \"string\",\n          \"endAt\": \"string\"\n        }\n      },\n      \"businessClients\": [\n        {\n          \"businessClientCode\": \"string\",\n          \"price\": {\n            \"currency\": \"string\",\n            \"value\": 0,\n            \"salePrice\": {\n              \"value\": 0,\n              \"startAt\": \"string\",\n              \"endAt\": \"string\"\n            }\n          }\n        }\n      ]\n    }\n  ]\n}")
+
+              req, _ := http.NewRequest("POST", url, payload)
+
+              req.Header.Add("Authorization", "Bearer ")
+
               res, _ := http.DefaultClient.Do(req)
+
               defer res.Body.Close()
               body, _ := ioutil.ReadAll(res.Body)
 
               fmt.Println(res)
               fmt.Println(string(body))
+
             }
         - lang: 'php'
           source: | 
-            /**
-            * Requires libcurl
-            */
+            <?php
 
             $curl = curl_init();
 
-            $payload = array(
-              "products" => array(
-                array(
-                  "sellerSku" => "8682447314708",
-                  "id" => "07c390ae-d58a-42a2-8ec6-5051bca18cab",
-                  "category" => "1017650 - Fashion / Women\'s Fashion / Clothing / Dresses",
-                  "price" => array(
-                    "currency" => "EGP",
-                    "value" => 62,
-                    "salePrice" => array(
-                      "value" => 55,
-                      "startAt" => "2021-08-11 10:30",
-                      "endAt" => "2030-08-07 10:30"
-                    )
-                  ),
-                  "businessClients" => array(
-                    array(
-                      "businessClientCode" => "jumia-ma",
-                      "price" => array(
-                        "currency" => "EGP",
-                        "value" => 62,
-                        "salePrice" => array(
-                          "value" => 55,
-                          "startAt" => "2021-08-11 10:30",
-                          "endAt" => "2030-08-07 10:30"
-                        )
-                      )
-                    ),
-                    array(
-                      "businessClientCode" => "jumia-dz",
-                      "price" => array(
-                        "currency" => "EGP",
-                        "value" => 82,
-                        "salePrice" => array(
-                          "value" => 45,
-                          "startAt" => "2021-08-12 10:30",
-                          "endAt" => "2030-08-08 10:30"
-                        )
-                      )
-                    )
-                  )
-                )
-              )
-            );
-
             curl_setopt_array($curl, [
-              CURLOPT_HTTPHEADER => [
-                "Authorization: string",
-                "Content-Type: application/json"
-              ],
-              CURLOPT_POSTFIELDS => json_encode($payload),
               CURLOPT_URL => "https://vendor-api-staging.jumia.com/feeds/products/price",
               CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => "{\n  \"products\": [\n    {\n      \"id\": \"string\",\n      \"sellerSku\": \"string\",\n      \"category\": 0,\n      \"price\": {\n        \"currency\": \"string\",\n        \"value\": 0,\n        \"salePrice\": {\n          \"value\": 0,\n          \"startAt\": \"string\",\n          \"endAt\": \"string\"\n        }\n      },\n      \"businessClients\": [\n        {\n          \"businessClientCode\": \"string\",\n          \"price\": {\n            \"currency\": \"string\",\n            \"value\": 0,\n            \"salePrice\": {\n              \"value\": 0,\n              \"startAt\": \"string\",\n              \"endAt\": \"string\"\n            }\n          }\n        }\n      ]\n    }\n  ]\n}",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer "
+              ],
             ]);
 
             $response = curl_exec($curl);
-            $error = curl_error($curl);
+            $err = curl_error($curl);
 
             curl_close($curl);
 
-            if ($error) {
-              echo "cURL Error #:" . $error;
+            if ($err) {
+              echo "cURL Error #:" . $err;
             } else {
               echo $response;
             }
@@ -4041,169 +3699,90 @@ paths:
 
           url = "https://vendor-api-staging.jumia.com/feeds/products/status"
 
-          payload = {
-            "products": [
-              {
-                "sellerSku": "8682447314708",
-                "id": "07c390ae-d58a-42a2-8ec6-5051bca18cab",
-                "createdAt": "2021-08-11",
-                "businessClients": [
+          payload = {"products": [
                   {
-                    "businessClientCode": "jumia-ma",
-                    "status": "ACTIVE"
-                  },
-                  {
-                    "businessClientCode": "jumia-dz",
-                    "status": "INACTIVE"
+                      "id": "string",
+                      "sellerSku": "string",
+                      "createdAt": "string",
+                      "businessClients": [
+                          {
+                              "businessClientCode": "string",
+                              "status": "string"
+                          }
+                      ]
                   }
-                ]
-              }
-            ]
-          }
+              ]}
+          headers = {"Authorization": "Bearer "}
 
-          headers = {
-            "Content-Type": "application/json",
-            "Authorization": "string"
-          }
+          response = requests.request("POST", url, json=payload, headers=headers)
 
-          response = requests.post(url, json=payload, headers=headers)
-
-          data = response.json()
-          print(data)
+          print(response.text)
       - lang: 'java'
         source: | 
-          import java.net.*;
-          import java.net.http.*;
-          import java.util.*;
-
-          public class App {
-            public static void main(String[] args) throws Exception {
-              var httpClient = HttpClient.newBuilder().build();
-
-              var payload = String.join("\n"
-                , "{"
-                , " \"products\": ["
-                , "  {"
-                , "   \"sellerSku\": \"8682447314708\","
-                , "   \"id\": \"07c390ae-d58a-42a2-8ec6-5051bca18cab\","
-                , "   \"createdAt\": \"2021-08-11\","
-                , "   \"businessClients\": ["
-                , "    {"
-                , "     \"businessClientCode\": \"jumia-ma\","
-                , "     \"status\": \"ACTIVE\""
-                , "    },"
-                , "    {"
-                , "     \"businessClientCode\": \"jumia-dz\","
-                , "     \"status\": \"INACTIVE\""
-                , "    }"
-                , "   ]"
-                , "  }"
-                , " ]"
-                , "}"
-              );
-
-              var host = "https://vendor-api-staging.jumia.com";
-              var pathname = "/feeds/products/status";
-              var request = HttpRequest.newBuilder()
-                .POST(HttpRequest.BodyPublishers.ofString(payload))
-                .uri(URI.create(host + pathname ))
-                .header("Content-Type", "application/json")
-                .header("Authorization", "string")
-                .build();
-
-              var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-              System.out.println(response.body());
-            }
-          }
+          HttpRequest request = HttpRequest.newBuilder()
+              .uri(URI.create("https://vendor-api-staging.jumia.com/feeds/products/status"))
+              .header("Authorization", "Bearer ")
+              .method("POST", HttpRequest.BodyPublishers.ofString("{\n  \"products\": [\n    {\n      \"id\": \"string\",\n      \"sellerSku\": \"string\",\n      \"createdAt\": \"string\",\n      \"businessClients\": [\n        {\n          \"businessClientCode\": \"string\",\n          \"status\": \"string\"\n        }\n      ]\n    }\n  ]\n}"))
+              .build();
+          HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+          System.out.println(response.body());
       - lang: 'go'
         source: | 
           package main
 
           import (
             "fmt"
-            "bytes"
+            "strings"
             "net/http"
             "io/ioutil"
           )
 
           func main() {
-            reqUrl := "https://vendor-api-staging.jumia.com/feeds/products/status"
-            var data = []byte(`{
-              "products": [
-                {
-                  "sellerSku": "8682447314708",
-                  "id": "07c390ae-d58a-42a2-8ec6-5051bca18cab",
-                  "createdAt": "2021-08-11",
-                  "businessClients": [
-                    {
-                      "businessClientCode": "jumia-ma",
-                      "status": "ACTIVE"
-                    },
-                    {
-                      "businessClientCode": "jumia-dz",
-                      "status": "INACTIVE"
-                    }
-                  ]
-                }
-              ]
-            }`)
-            req, _ := http.NewRequest("POST", reqUrl, bytes.NewBuffer(data))
-            req.Header.Add("Content-Type", "application/json")
-            req.Header.Add("Authorization", "string")
+
+            url := "https://vendor-api-staging.jumia.com/feeds/products/status"
+
+            payload := strings.NewReader("{\n  \"products\": [\n    {\n      \"id\": \"string\",\n      \"sellerSku\": \"string\",\n      \"createdAt\": \"string\",\n      \"businessClients\": [\n        {\n          \"businessClientCode\": \"string\",\n          \"status\": \"string\"\n        }\n      ]\n    }\n  ]\n}")
+
+            req, _ := http.NewRequest("POST", url, payload)
+
+            req.Header.Add("Authorization", "Bearer ")
+
             res, _ := http.DefaultClient.Do(req)
+
             defer res.Body.Close()
             body, _ := ioutil.ReadAll(res.Body)
 
             fmt.Println(res)
             fmt.Println(string(body))
+
           }
       - lang: 'php'
         source: | 
-          /**
-          * Requires libcurl
-          */
+          <?php
 
           $curl = curl_init();
 
-          $payload = array(
-            "products" => array(
-              array(
-                "sellerSku" => "8682447314708",
-                "id" => "07c390ae-d58a-42a2-8ec6-5051bca18cab",
-                "createdAt" => "2021-08-11",
-                "businessClients" => array(
-                  array(
-                    "businessClientCode" => "jumia-ma",
-                    "status" => "ACTIVE"
-                  ),
-                  array(
-                    "businessClientCode" => "jumia-dz",
-                    "status" => "INACTIVE"
-                  )
-                )
-              )
-            )
-          );
-
           curl_setopt_array($curl, [
-            CURLOPT_HTTPHEADER => [
-              "Authorization: string",
-              "Content-Type: application/json"
-            ],
-            CURLOPT_POSTFIELDS => json_encode($payload),
             CURLOPT_URL => "https://vendor-api-staging.jumia.com/feeds/products/status",
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => "{\n  \"products\": [\n    {\n      \"id\": \"string\",\n      \"sellerSku\": \"string\",\n      \"createdAt\": \"string\",\n      \"businessClients\": [\n        {\n          \"businessClientCode\": \"string\",\n          \"status\": \"string\"\n        }\n      ]\n    }\n  ]\n}",
+            CURLOPT_HTTPHEADER => [
+              "Authorization: Bearer "
+            ],
           ]);
 
           $response = curl_exec($curl);
-          $error = curl_error($curl);
+          $err = curl_error($curl);
 
           curl_close($curl);
 
-          if ($error) {
-            echo "cURL Error #:" . $error;
+          if ($err) {
+            echo "cURL Error #:" . $err;
           } else {
             echo $response;
           }
@@ -4800,576 +4379,147 @@ paths:
             url = "https://vendor-api-staging.jumia.com/feeds/products/create"
 
             payload = {
-              "shopId": "a8b5534b-277b-449c-97b7-c00979dd9c3a",
-              "products": [
-                {
-                  "name": {
-                    "value": "Name should be between 15 and 60 characters",
-                    "translations": [
-                      {
-                        "language": "AR",
-                        "value": "اختبار اسم المنتج"
-                      },
-                      {
-                        "language": "FR",
-                        "value": "Test du nom du produit"
-                      }
-                    ]
-                  },
-                  "description": {
-                    "value": "Description should have more than 150 words. Product number35G41EAProduct nameHP Spectre x360 Convertible 14-ea0047naMicroprocessorIntel® Core™ i5-1135G7 (up to 4.2 GHz with Intel® Turbo Boost Technology, 8 MB L3 cache, 4 cores)ChipsetIntel® Integrated SoCMemory, standard8 GB LPDDR4x-3733 MHz RAM (onboard)Video graphicsIntel® Iris® Xᵉ GraphicsHard drive512 GB PCIe® NVMe™ TLC M.2 SSDOptical driveOptical drive not includedDisplay34.3 cm (13.5) diagonal, WUXGA+ (1920 x 1280), multitouch-enabled, IPS, edge-to-edge glass, micro-edge, Corning® Gorilla® Glass NBT™, 1000 nits, 100% sRGB, HP Sure View Reflect integrated privacy screenWireless connectivityIntel® Wi-Fi 6 AX201 (2x2) and Bluetooth® 5 combo (Supporting Gigabit file transfer speeds)Expansion slots1 microSD media card readerExternal ports2 Thunderbolt™ 4 with USB4™ Type-C® 40Gbps signaling rate (USB Power Delivery, DisplayPort™ 1.4, HP Sleep and Charge); 1 SuperSpeed USB Type-A 10Gbps signaling rate (HP Sleep and Charge); 1 headphone/microphone comboMinimum dimensions (W x D x H)29.83 x 22.01 x 1.69 cmWeight1.34 kgPower supply type65 W USB Type-C® power adapterBattery type4-cell, 66 Wh Li-ion polymerBattery life mixed usageUp to 15 hours and 45 minutesVideo Playback Battery lifeUp to 16 hours and 30 minutesWebcamHP True Vision 720p HD IR camera with camera shutter and integrated dual array digital microphonesAudio featuresAudio by Bang & Olufsen; Quad speakers; HP Audio BoostSoftwareOperating systemWindows 10 Home 64HP appsHP 3D DriveGuard; HP Audio Switch; HP JumpStart; HP Support AssistantSoftware includedMcAfee LiveSafe™Pre-installed softwareExpressVPN (30 day free trial); LastPass Premium (30 day free trial).",
-                    "translations": [
-                      {
-                        "language": "AR",
-                        "value": "اختبار اسم المنتج"
-                      },
-                      {
-                        "language": "FR",
-                        "value": "Test du description du produit"
-                      }
-                    ]
-                  },
-                  "parentSku": "new_product_sku_60077999",
-                  "sellerSku": "new_product_sku_60077999",
-                  "barcodeEan": "1234567000001239999",
-                  "variation": "1",
-                  "brand": {
-                    "code": 1126253,
-                    "name": "123 updated"
-                  },
-                  "category": {
-                    "code": 1004141,
-                    "name": "Gaming / PC Gaming / Accessories / Controllers"
-                  },
-                  "images": [
+                "shopId": "string",
+                "products": [
                     {
-                      "url": "https://ng.jumia.is/LgDWyaUAUqlaDlr6gmf0ui43GGk=/fit-in/500x500/filters:fill(white)/product/90/278208/1.jpg?4790",
-                      "primary": True
-                    },
-                    {
-                      "url": "https://ng.jumia.is/W-t47t1CIN1cl_y6KcnaM5Z-PjM=/fit-in/500x500/filters:fill(white)/product/90/278208/2.jpg?4790",
-                      "primary": False
-                    }
-                  ],
-                  "price": {
-                    "currency": "USD",
-                    "value": 200,
-                    "salePrice": {
-                      "value": 150,
-                      "startAt": "2022-08-11",
-                      "endAt": "2022-08-22"
-                    }
-                  },
-                  "stock": 500,
-                  "attributes": [
-                    {
-                      "name": "isbn",
-                      "value": "0-6280-1750-2"
-                    },
-                    {
-                      "name": "note",
-                      "value": "note about the product"
-                    },
-                    {
-                      "name": "plug_type",
-                      "value": "EU"
-                    },
-                    {
-                      "name": "voltage",
-                      "value": "100"
-                    },
-                    {
-                      "name": "connection_gender",
-                      "value": "gender of the connection"
-                    },
-                    {
-                      "name": "battery_capacity",
-                      "value": "100 mAh"
-                    },
-                    {
-                      "name": "model",
-                      "value": "product model",
-                      "translations": [
-                        {
-                          "language": "AR",
-                          "value": "محتوى العبوة عربي"
+                        "name": {
+                            "value": "string",
+                            "translations": [
+                                {
+                                    "language": "string",
+                                    "value": "string"
+                                }
+                            ]
                         },
-                        {
-                          "language": "FR",
-                          "value": "Produit model"
-                        }
-                      ]
-                    },
-                    {
-                      "name": "short_description",
-                      "value": "<ul><li>short description should have at least 4 bullets</li><li>short description </li><li>short description </li><li>short description </li></ul>"
-                    },
-                    {
-                      "name": "color_family",
-                      "value": "Black"
-                    },
-                    {
-                      "name": "color",
-                      "value": "Black"
-                    },
-                    {
-                      "name": "warranty_duration",
-                      "value": "10"
+                        "description": {
+                            "value": "string",
+                            "translations": [
+                                {
+                                    "language": "string",
+                                    "value": "string"
+                                }
+                            ]
+                        },
+                        "parentSku": "string",
+                        "sellerSku": "string",
+                        "barcodeEan": "string",
+                        "variation": "string",
+                        "brand": {
+                            "code": 0,
+                            "name": "string"
+                        },
+                        "category": {
+                            "code": 0,
+                            "name": "string"
+                        },
+                        "additionalCategories": [
+                            {
+                                "code": 0,
+                                "name": "string"
+                            }
+                        ],
+                        "images": [
+                            {
+                                "url": "string",
+                                "primary": True
+                            }
+                        ],
+                        "price": {
+                            "currency": "string",
+                            "value": 0,
+                            "salePrice": {
+                                "value": 0,
+                                "startAt": "string",
+                                "endAt": "string"
+                            }
+                        },
+                        "stock": 0,
+                        "attributes": [
+                            {
+                                "name": "string",
+                                "value": "string",
+                                "translations": [
+                                    {
+                                        "language": "string",
+                                        "value": "string"
+                                    }
+                                ]
+                            }
+                        ]
                     }
-                  ]
-                }
-              ]
+                ]
             }
+            headers = {"Authorization": "Bearer "}
 
-            headers = {
-              "Content-Type": "application/json",
-              "Authorization": "string"
-            }
+            response = requests.request("POST", url, json=payload, headers=headers)
 
-            response = requests.post(url, json=payload, headers=headers)
-
-            data = response.json()
-            print(data)
+            print(response.text)
         - lang: 'java'
           source: | 
-            import java.net.*;
-            import java.net.http.*;
-            import java.util.*;
-
-            public class App {
-              public static void main(String[] args) throws Exception {
-                var httpClient = HttpClient.newBuilder().build();
-
-                var payload = String.join("\n"
-                  , "{"
-                  , " \"shopId\": \"a8b5534b-277b-449c-97b7-c00979dd9c3a\","
-                  , " \"products\": ["
-                  , "  {"
-                  , "   \"name\": {"
-                  , "    \"value\": \"Name should be between 15 and 60 characters\","
-                  , "    \"translations\": ["
-                  , "     {"
-                  , "      \"language\": \"AR\","
-                  , "      \"value\": \"اختبار اسم المنتج\""
-                  , "     },"
-                  , "     {"
-                  , "      \"language\": \"FR\","
-                  , "      \"value\": \"Test du nom du produit\""
-                  , "     }"
-                  , "    ]"
-                  , "   },"
-                  , "   \"description\": {"
-                  , "    \"value\": \"Description should have more than 150 words. Product number35G41EAProduct nameHP Spectre x360 Convertible 14-ea0047naMicroprocessorIntel® Core™ i5-1135G7 (up to 4.2 GHz with Intel® Turbo Boost Technology, 8 MB L3 cache, 4 cores)ChipsetIntel® Integrated SoCMemory, standard8 GB LPDDR4x-3733 MHz RAM (onboard)Video graphicsIntel® Iris® Xᵉ GraphicsHard drive512 GB PCIe® NVMe™ TLC M.2 SSDOptical driveOptical drive not includedDisplay34.3 cm (13.5) diagonal, WUXGA+ (1920 x 1280), multitouch-enabled, IPS, edge-to-edge glass, micro-edge, Corning® Gorilla® Glass NBT™, 1000 nits, 100% sRGB, HP Sure View Reflect integrated privacy screenWireless connectivityIntel® Wi-Fi 6 AX201 (2x2) and Bluetooth® 5 combo (Supporting Gigabit file transfer speeds)Expansion slots1 microSD media card readerExternal ports2 Thunderbolt™ 4 with USB4™ Type-C® 40Gbps signaling rate (USB Power Delivery, DisplayPort™ 1.4, HP Sleep and Charge); 1 SuperSpeed USB Type-A 10Gbps signaling rate (HP Sleep and Charge); 1 headphone/microphone comboMinimum dimensions (W x D x H)29.83 x 22.01 x 1.69 cmWeight1.34 kgPower supply type65 W USB Type-C® power adapterBattery type4-cell, 66 Wh Li-ion polymerBattery life mixed usageUp to 15 hours and 45 minutesVideo Playback Battery lifeUp to 16 hours and 30 minutesWebcamHP True Vision 720p HD IR camera with camera shutter and integrated dual array digital microphonesAudio featuresAudio by Bang & Olufsen; Quad speakers; HP Audio BoostSoftwareOperating systemWindows 10 Home 64HP appsHP 3D DriveGuard; HP Audio Switch; HP JumpStart; HP Support AssistantSoftware includedMcAfee LiveSafe™Pre-installed softwareExpressVPN (30 day free trial); LastPass Premium (30 day free trial).\","
-                  , "    \"translations\": ["
-                  , "     {"
-                  , "      \"language\": \"AR\","
-                  , "      \"value\": \"اختبار اسم المنتج\""
-                  , "     },"
-                  , "     {"
-                  , "      \"language\": \"FR\","
-                  , "      \"value\": \"Test du description du produit\""
-                  , "     }"
-                  , "    ]"
-                  , "   },"
-                  , "   \"parentSku\": \"new_product_sku_60077999\","
-                  , "   \"sellerSku\": \"new_product_sku_60077999\","
-                  , "   \"barcodeEan\": \"1234567000001239999\","
-                  , "   \"variation\": \"1\","
-                  , "   \"brand\": {"
-                  , "    \"code\": 1126253,"
-                  , "    \"name\": \"123 updated\""
-                  , "   },"
-                  , "   \"category\": {"
-                  , "    \"code\": 1004141,"
-                  , "    \"name\": \"Gaming / PC Gaming / Accessories / Controllers\""
-                  , "   },"
-                  , "   \"images\": ["
-                  , "    {"
-                  , "     \"url\": \"https://ng.jumia.is/LgDWyaUAUqlaDlr6gmf0ui43GGk=/fit-in/500x500/filters:fill(white)/product/90/278208/1.jpg?4790\","
-                  , "     \"primary\": true"
-                  , "    },"
-                  , "    {"
-                  , "     \"url\": \"https://ng.jumia.is/W-t47t1CIN1cl_y6KcnaM5Z-PjM=/fit-in/500x500/filters:fill(white)/product/90/278208/2.jpg?4790\","
-                  , "     \"primary\": false"
-                  , "    }"
-                  , "   ],"
-                  , "   \"price\": {"
-                  , "    \"currency\": \"USD\","
-                  , "    \"value\": 200,"
-                  , "    \"salePrice\": {"
-                  , "     \"value\": 150,"
-                  , "     \"startAt\": \"2022-08-11\","
-                  , "     \"endAt\": \"2022-08-22\""
-                  , "    }"
-                  , "   },"
-                  , "   \"stock\": 500,"
-                  , "   \"attributes\": ["
-                  , "    {"
-                  , "     \"name\": \"isbn\","
-                  , "     \"value\": \"0-6280-1750-2\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"note\","
-                  , "     \"value\": \"note about the product\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"plug_type\","
-                  , "     \"value\": \"EU\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"voltage\","
-                  , "     \"value\": \"100\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"connection_gender\","
-                  , "     \"value\": \"gender of the connection\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"battery_capacity\","
-                  , "     \"value\": \"100 mAh\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"model\","
-                  , "     \"value\": \"product model\","
-                  , "     \"translations\": ["
-                  , "      {"
-                  , "       \"language\": \"AR\","
-                  , "       \"value\": \"محتوى العبوة عربي\""
-                  , "      },"
-                  , "      {"
-                  , "       \"language\": \"FR\","
-                  , "       \"value\": \"Produit model\""
-                  , "      }"
-                  , "     ]"
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"short_description\","
-                  , "     \"value\": \"<ul><li>short description should have at least 4 bullets</li><li>short description </li><li>short description </li><li>short description </li></ul>\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"color_family\","
-                  , "     \"value\": \"Black\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"color\","
-                  , "     \"value\": \"Black\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"warranty_duration\","
-                  , "     \"value\": \"10\""
-                  , "    }"
-                  , "   ]"
-                  , "  }"
-                  , " ]"
-                  , "}"
-                );
-
-                var host = "https://vendor-api-staging.jumia.com";
-                var pathname = "/feeds/products/create";
-                var request = HttpRequest.newBuilder()
-                  .POST(HttpRequest.BodyPublishers.ofString(payload))
-                  .uri(URI.create(host + pathname ))
-                  .header("Content-Type", "application/json")
-                  .header("Authorization", "string")
-                  .build();
-
-                var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-                System.out.println(response.body());
-              }
-            }
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://vendor-api-staging.jumia.com/feeds/products/create"))
+                .header("Authorization", "Bearer ")
+                .method("POST", HttpRequest.BodyPublishers.ofString("{\n  \"shopId\": \"string\",\n  \"products\": [\n    {\n      \"name\": {\n        \"value\": \"string\",\n        \"translations\": [\n          {\n            \"language\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      \"description\": {\n        \"value\": \"string\",\n        \"translations\": [\n          {\n            \"language\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      \"parentSku\": \"string\",\n      \"sellerSku\": \"string\",\n      \"barcodeEan\": \"string\",\n      \"variation\": \"string\",\n      \"brand\": {\n        \"code\": 0,\n        \"name\": \"string\"\n      },\n      \"category\": {\n        \"code\": 0,\n        \"name\": \"string\"\n      },\n      \"additionalCategories\": [\n        {\n          \"code\": 0,\n          \"name\": \"string\"\n        }\n      ],\n      \"images\": [\n        {\n          \"url\": \"string\",\n          \"primary\": true\n        }\n      ],\n      \"price\": {\n        \"currency\": \"string\",\n        \"value\": 0,\n        \"salePrice\": {\n          \"value\": 0,\n          \"startAt\": \"string\",\n          \"endAt\": \"string\"\n        }\n      },\n      \"stock\": 0,\n      \"attributes\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"translations\": [\n            {\n              \"language\": \"string\",\n              \"value\": \"string\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}"))
+                .build();
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
         - lang: 'go'
           source: | 
             package main
 
             import (
               "fmt"
-              "bytes"
+              "strings"
               "net/http"
               "io/ioutil"
             )
 
             func main() {
-              reqUrl := "https://vendor-api-staging.jumia.com/feeds/products/create"
-              var data = []byte(`{
-                "shopId": "a8b5534b-277b-449c-97b7-c00979dd9c3a",
-                "products": [
-                  {
-                    "name": {
-                      "value": "Name should be between 15 and 60 characters",
-                      "translations": [
-                        {
-                          "language": "AR",
-                          "value": "اختبار اسم المنتج"
-                        },
-                        {
-                          "language": "FR",
-                          "value": "Test du nom du produit"
-                        }
-                      ]
-                    },
-                    "description": {
-                      "value": "Description should have more than 150 words. Product number35G41EAProduct nameHP Spectre x360 Convertible 14-ea0047naMicroprocessorIntel® Core™ i5-1135G7 (up to 4.2 GHz with Intel® Turbo Boost Technology, 8 MB L3 cache, 4 cores)ChipsetIntel® Integrated SoCMemory, standard8 GB LPDDR4x-3733 MHz RAM (onboard)Video graphicsIntel® Iris® Xᵉ GraphicsHard drive512 GB PCIe® NVMe™ TLC M.2 SSDOptical driveOptical drive not includedDisplay34.3 cm (13.5) diagonal, WUXGA+ (1920 x 1280), multitouch-enabled, IPS, edge-to-edge glass, micro-edge, Corning® Gorilla® Glass NBT™, 1000 nits, 100% sRGB, HP Sure View Reflect integrated privacy screenWireless connectivityIntel® Wi-Fi 6 AX201 (2x2) and Bluetooth® 5 combo (Supporting Gigabit file transfer speeds)Expansion slots1 microSD media card readerExternal ports2 Thunderbolt™ 4 with USB4™ Type-C® 40Gbps signaling rate (USB Power Delivery, DisplayPort™ 1.4, HP Sleep and Charge); 1 SuperSpeed USB Type-A 10Gbps signaling rate (HP Sleep and Charge); 1 headphone/microphone comboMinimum dimensions (W x D x H)29.83 x 22.01 x 1.69 cmWeight1.34 kgPower supply type65 W USB Type-C® power adapterBattery type4-cell, 66 Wh Li-ion polymerBattery life mixed usageUp to 15 hours and 45 minutesVideo Playback Battery lifeUp to 16 hours and 30 minutesWebcamHP True Vision 720p HD IR camera with camera shutter and integrated dual array digital microphonesAudio featuresAudio by Bang & Olufsen; Quad speakers; HP Audio BoostSoftwareOperating systemWindows 10 Home 64HP appsHP 3D DriveGuard; HP Audio Switch; HP JumpStart; HP Support AssistantSoftware includedMcAfee LiveSafe™Pre-installed softwareExpressVPN (30 day free trial); LastPass Premium (30 day free trial).",
-                      "translations": [
-                        {
-                          "language": "AR",
-                          "value": "اختبار اسم المنتج"
-                        },
-                        {
-                          "language": "FR",
-                          "value": "Test du description du produit"
-                        }
-                      ]
-                    },
-                    "parentSku": "new_product_sku_60077999",
-                    "sellerSku": "new_product_sku_60077999",
-                    "barcodeEan": "1234567000001239999",
-                    "variation": "1",
-                    "brand": {
-                      "code": 1126253,
-                      "name": "123 updated"
-                    },
-                    "category": {
-                      "code": 1004141,
-                      "name": "Gaming / PC Gaming / Accessories / Controllers"
-                    },
-                    "images": [
-                      {
-                        "url": "https://ng.jumia.is/LgDWyaUAUqlaDlr6gmf0ui43GGk=/fit-in/500x500/filters:fill(white)/product/90/278208/1.jpg?4790",
-                        "primary": true
-                      },
-                      {
-                        "url": "https://ng.jumia.is/W-t47t1CIN1cl_y6KcnaM5Z-PjM=/fit-in/500x500/filters:fill(white)/product/90/278208/2.jpg?4790",
-                        "primary": false
-                      }
-                    ],
-                    "price": {
-                      "currency": "USD",
-                      "value": 200,
-                      "salePrice": {
-                        "value": 150,
-                        "startAt": "2022-08-11",
-                        "endAt": "2022-08-22"
-                      }
-                    },
-                    "stock": 500,
-                    "attributes": [
-                      {
-                        "name": "isbn",
-                        "value": "0-6280-1750-2"
-                      },
-                      {
-                        "name": "note",
-                        "value": "note about the product"
-                      },
-                      {
-                        "name": "plug_type",
-                        "value": "EU"
-                      },
-                      {
-                        "name": "voltage",
-                        "value": "100"
-                      },
-                      {
-                        "name": "connection_gender",
-                        "value": "gender of the connection"
-                      },
-                      {
-                        "name": "battery_capacity",
-                        "value": "100 mAh"
-                      },
-                      {
-                        "name": "model",
-                        "value": "product model",
-                        "translations": [
-                          {
-                            "language": "AR",
-                            "value": "محتوى العبوة عربي"
-                          },
-                          {
-                            "language": "FR",
-                            "value": "Produit model"
-                          }
-                        ]
-                      },
-                      {
-                        "name": "short_description",
-                        "value": "<ul><li>short description should have at least 4 bullets</li><li>short description </li><li>short description </li><li>short description </li></ul>"
-                      },
-                      {
-                        "name": "color_family",
-                        "value": "Black"
-                      },
-                      {
-                        "name": "color",
-                        "value": "Black"
-                      },
-                      {
-                        "name": "warranty_duration",
-                        "value": "10"
-                      }
-                    ]
-                  }
-                ]
-              }`)
-              req, _ := http.NewRequest("POST", reqUrl, bytes.NewBuffer(data))
-              req.Header.Add("Content-Type", "application/json")
-              req.Header.Add("Authorization", "string")
+
+              url := "https://vendor-api-staging.jumia.com/feeds/products/create"
+
+              payload := strings.NewReader("{\n  \"shopId\": \"string\",\n  \"products\": [\n    {\n      \"name\": {\n        \"value\": \"string\",\n        \"translations\": [\n          {\n            \"language\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      \"description\": {\n        \"value\": \"string\",\n        \"translations\": [\n          {\n            \"language\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      \"parentSku\": \"string\",\n      \"sellerSku\": \"string\",\n      \"barcodeEan\": \"string\",\n      \"variation\": \"string\",\n      \"brand\": {\n        \"code\": 0,\n        \"name\": \"string\"\n      },\n      \"category\": {\n        \"code\": 0,\n        \"name\": \"string\"\n      },\n      \"additionalCategories\": [\n        {\n          \"code\": 0,\n          \"name\": \"string\"\n        }\n      ],\n      \"images\": [\n        {\n          \"url\": \"string\",\n          \"primary\": true\n        }\n      ],\n      \"price\": {\n        \"currency\": \"string\",\n        \"value\": 0,\n        \"salePrice\": {\n          \"value\": 0,\n          \"startAt\": \"string\",\n          \"endAt\": \"string\"\n        }\n      },\n      \"stock\": 0,\n      \"attributes\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"translations\": [\n            {\n              \"language\": \"string\",\n              \"value\": \"string\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}")
+
+              req, _ := http.NewRequest("POST", url, payload)
+
+              req.Header.Add("Authorization", "Bearer ")
+
               res, _ := http.DefaultClient.Do(req)
+
               defer res.Body.Close()
               body, _ := ioutil.ReadAll(res.Body)
 
               fmt.Println(res)
               fmt.Println(string(body))
+
             }
         - lang: 'php'
           source: | 
-            /**
-            * Requires libcurl
-            */
+            <?php
 
             $curl = curl_init();
 
-            $payload = array(
-              "shopId" => "a8b5534b-277b-449c-97b7-c00979dd9c3a",
-              "products" => array(
-                array(
-                  "name" => array(
-                    "value" => "Name should be between 15 and 60 characters",
-                    "translations" => array(
-                      array(
-                        "language" => "AR",
-                        "value" => "اختبار اسم المنتج"
-                      ),
-                      array(
-                        "language" => "FR",
-                        "value" => "Test du nom du produit"
-                      )
-                    )
-                  ),
-                  "description" => array(
-                    "value" => "Description should have more than 150 words. Product number35G41EAProduct nameHP Spectre x360 Convertible 14-ea0047naMicroprocessorIntel® Core™ i5-1135G7 (up to 4.2 GHz with Intel® Turbo Boost Technology, 8 MB L3 cache, 4 cores)ChipsetIntel® Integrated SoCMemory, standard8 GB LPDDR4x-3733 MHz RAM (onboard)Video graphicsIntel® Iris® Xᵉ GraphicsHard drive512 GB PCIe® NVMe™ TLC M.2 SSDOptical driveOptical drive not includedDisplay34.3 cm (13.5) diagonal, WUXGA+ (1920 x 1280), multitouch-enabled, IPS, edge-to-edge glass, micro-edge, Corning® Gorilla® Glass NBT™, 1000 nits, 100% sRGB, HP Sure View Reflect integrated privacy screenWireless connectivityIntel® Wi-Fi 6 AX201 (2x2) and Bluetooth® 5 combo (Supporting Gigabit file transfer speeds)Expansion slots1 microSD media card readerExternal ports2 Thunderbolt™ 4 with USB4™ Type-C® 40Gbps signaling rate (USB Power Delivery, DisplayPort™ 1.4, HP Sleep and Charge); 1 SuperSpeed USB Type-A 10Gbps signaling rate (HP Sleep and Charge); 1 headphone/microphone comboMinimum dimensions (W x D x H)29.83 x 22.01 x 1.69 cmWeight1.34 kgPower supply type65 W USB Type-C® power adapterBattery type4-cell, 66 Wh Li-ion polymerBattery life mixed usageUp to 15 hours and 45 minutesVideo Playback Battery lifeUp to 16 hours and 30 minutesWebcamHP True Vision 720p HD IR camera with camera shutter and integrated dual array digital microphonesAudio featuresAudio by Bang & Olufsen; Quad speakers; HP Audio BoostSoftwareOperating systemWindows 10 Home 64HP appsHP 3D DriveGuard; HP Audio Switch; HP JumpStart; HP Support AssistantSoftware includedMcAfee LiveSafe™Pre-installed softwareExpressVPN (30 day free trial); LastPass Premium (30 day free trial).",
-                    "translations" => array(
-                      array(
-                        "language" => "AR",
-                        "value" => "اختبار اسم المنتج"
-                      ),
-                      array(
-                        "language" => "FR",
-                        "value" => "Test du description du produit"
-                      )
-                    )
-                  ),
-                  "parentSku" => "new_product_sku_60077999",
-                  "sellerSku" => "new_product_sku_60077999",
-                  "barcodeEan" => "1234567000001239999",
-                  "variation" => "1",
-                  "brand" => array(
-                    "code" => 1126253,
-                    "name" => "123 updated"
-                  ),
-                  "category" => array(
-                    "code" => 1004141,
-                    "name" => "Gaming / PC Gaming / Accessories / Controllers"
-                  ),
-                  "images" => array(
-                    array(
-                      "url" => "https://ng.jumia.is/LgDWyaUAUqlaDlr6gmf0ui43GGk=/fit-in/500x500/filters:fill(white)/product/90/278208/1.jpg?4790",
-                      "primary" => true
-                    ),
-                    array(
-                      "url" => "https://ng.jumia.is/W-t47t1CIN1cl_y6KcnaM5Z-PjM=/fit-in/500x500/filters:fill(white)/product/90/278208/2.jpg?4790",
-                      "primary" => false
-                    )
-                  ),
-                  "price" => array(
-                    "currency" => "USD",
-                    "value" => 200,
-                    "salePrice" => array(
-                      "value" => 150,
-                      "startAt" => "2022-08-11",
-                      "endAt" => "2022-08-22"
-                    )
-                  ),
-                  "stock" => 500,
-                  "attributes" => array(
-                    array(
-                      "name" => "isbn",
-                      "value" => "0-6280-1750-2"
-                    ),
-                    array(
-                      "name" => "note",
-                      "value" => "note about the product"
-                    ),
-                    array(
-                      "name" => "plug_type",
-                      "value" => "EU"
-                    ),
-                    array(
-                      "name" => "voltage",
-                      "value" => "100"
-                    ),
-                    array(
-                      "name" => "connection_gender",
-                      "value" => "gender of the connection"
-                    ),
-                    array(
-                      "name" => "battery_capacity",
-                      "value" => "100 mAh"
-                    ),
-                    array(
-                      "name" => "model",
-                      "value" => "product model",
-                      "translations" => array(
-                        array(
-                          "language" => "AR",
-                          "value" => "محتوى العبوة عربي"
-                        ),
-                        array(
-                          "language" => "FR",
-                          "value" => "Produit model"
-                        )
-                      )
-                    ),
-                    array(
-                      "name" => "short_description",
-                      "value" => "<ul><li>short description should have at least 4 bullets</li><li>short description </li><li>short description </li><li>short description </li></ul>"
-                    ),
-                    array(
-                      "name" => "color_family",
-                      "value" => "Black"
-                    ),
-                    array(
-                      "name" => "color",
-                      "value" => "Black"
-                    ),
-                    array(
-                      "name" => "warranty_duration",
-                      "value" => "10"
-                    )
-                  )
-                )
-              )
-            );
-
             curl_setopt_array($curl, [
-              CURLOPT_HTTPHEADER => [
-                "Authorization: string",
-                "Content-Type: application/json"
-              ],
-              CURLOPT_POSTFIELDS => json_encode($payload),
               CURLOPT_URL => "https://vendor-api-staging.jumia.com/feeds/products/create",
               CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => "{\n  \"shopId\": \"string\",\n  \"products\": [\n    {\n      \"name\": {\n        \"value\": \"string\",\n        \"translations\": [\n          {\n            \"language\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      \"description\": {\n        \"value\": \"string\",\n        \"translations\": [\n          {\n            \"language\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      \"parentSku\": \"string\",\n      \"sellerSku\": \"string\",\n      \"barcodeEan\": \"string\",\n      \"variation\": \"string\",\n      \"brand\": {\n        \"code\": 0,\n        \"name\": \"string\"\n      },\n      \"category\": {\n        \"code\": 0,\n        \"name\": \"string\"\n      },\n      \"additionalCategories\": [\n        {\n          \"code\": 0,\n          \"name\": \"string\"\n        }\n      ],\n      \"images\": [\n        {\n          \"url\": \"string\",\n          \"primary\": true\n        }\n      ],\n      \"price\": {\n        \"currency\": \"string\",\n        \"value\": 0,\n        \"salePrice\": {\n          \"value\": 0,\n          \"startAt\": \"string\",\n          \"endAt\": \"string\"\n        }\n      },\n      \"stock\": 0,\n      \"attributes\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"translations\": [\n            {\n              \"language\": \"string\",\n              \"value\": \"string\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer "
+              ],
             ]);
 
             $response = curl_exec($curl);
-            $error = curl_error($curl);
+            $err = curl_error($curl);
 
             curl_close($curl);
 
-            if ($error) {
-              echo "cURL Error #:" . $error;
+            if ($err) {
+              echo "cURL Error #:" . $err;
             } else {
               echo $response;
             }
@@ -6227,1040 +5377,146 @@ paths:
             url = "https://vendor-api-staging.jumia.com/feeds/products/update"
 
             payload = {
-              "shopId": "a8b5534b-277b-449c-97b7-c00979dd9c3a",
-              "products": [
-                {
-                  "name": {
-                    "value": "Name of one variation of the product between 15 and 60 characters",
-                    "translations": [
-                      {
-                        "language": "AR",
-                        "value": "اختبار اسم المنتج"
-                      },
-                      {
-                        "language": "FR",
-                        "value": "Test du nom du produit"
-                      }
-                    ]
-                  },
-                  "description": {
-                    "value": "Description should have more than 150 words. Product number35G41EAProduct nameHP Spectre x360 Convertible 14-ea0047naMicroprocessorIntel® Core™ i5-1135G7 (up to 4.2 GHz with Intel® Turbo Boost Technology, 8 MB L3 cache, 4 cores)ChipsetIntel® Integrated SoCMemory, standard8 GB LPDDR4x-3733 MHz RAM (onboard)Video graphicsIntel® Iris® Xᵉ GraphicsHard drive512 GB PCIe® NVMe™ TLC M.2 SSDOptical driveOptical drive not includedDisplay34.3 cm (13.5) diagonal, WUXGA+ (1920 x 1280), multitouch-enabled, IPS, edge-to-edge glass, micro-edge, Corning® Gorilla® Glass NBT™, 1000 nits, 100% sRGB, HP Sure View Reflect integrated privacy screenWireless connectivityIntel® Wi-Fi 6 AX201 (2x2) and Bluetooth® 5 combo (Supporting Gigabit file transfer speeds)Expansion slots1 microSD media card readerExternal ports2 Thunderbolt™ 4 with USB4™ Type-C® 40Gbps signaling rate (USB Power Delivery, DisplayPort™ 1.4, HP Sleep and Charge); 1 SuperSpeed USB Type-A 10Gbps signaling rate (HP Sleep and Charge); 1 headphone/microphone comboMinimum dimensions (W x D x H)29.83 x 22.01 x 1.69 cmWeight1.34 kgPower supply type65 W USB Type-C® power adapterBattery type4-cell, 66 Wh Li-ion polymerBattery life mixed usageUp to 15 hours and 45 minutesVideo Playback Battery lifeUp to 16 hours and 30 minutesWebcamHP True Vision 720p HD IR camera with camera shutter and integrated dual array digital microphonesAudio featuresAudio by Bang & Olufsen; Quad speakers; HP Audio BoostSoftwareOperating systemWindows 10 Home 64HP appsHP 3D DriveGuard; HP Audio Switch; HP JumpStart; HP Support AssistantSoftware includedMcAfee LiveSafe™Pre-installed softwareExpressVPN (30 day free trial); LastPass Premium (30 day free trial).",
-                    "translations": [
-                      {
-                        "language": "AR",
-                        "value": "اختبار اسم المنتج"
-                      },
-                      {
-                        "language": "FR",
-                        "value": "Test du description du produit"
-                      }
-                    ]
-                  },
-                  "parentSku": "new_product_sku_60077999",
-                  "sellerSku": "new_product_sku_60077999",
-                  "barcodeEan": "1234567000001239999",
-                  "variation": "1",
-                  "brand": {
-                    "code": 1126253,
-                    "name": "123 updated"
-                  },
-                  "category": {
-                    "code": 1004141,
-                    "name": "Gaming / PC Gaming / Accessories / Controllers"
-                  },
-                  "additionalCategories": [],
-                  "images": [
+                "shopId": "string",
+                "products": [
                     {
-                      "url": "https://ng.jumia.is/LgDWyaUAUqlaDlr6gmf0ui43GGk=/fit-in/500x500/filters:fill(white)/product/90/278208/1.jpg?4790",
-                      "primary": True
-                    },
-                    {
-                      "url": "https://ng.jumia.is/W-t47t1CIN1cl_y6KcnaM5Z-PjM=/fit-in/500x500/filters:fill(white)/product/90/278208/2.jpg?4790",
-                      "primary": False
-                    }
-                  ],
-                  "price": {
-                    "value": 200,
-                    "salePrice": {
-                      "value": 150,
-                      "startAt": "2022-08-11 15:00",
-                      "endAt": "2022-08-22 17:00"
-                    }
-                  },
-                  "stock": 500,
-                  "attributes": [
-                    {
-                      "name": "isbn",
-                      "value": "0-6280-1750-2"
-                    },
-                    {
-                      "name": "note",
-                      "value": "note about the product"
-                    },
-                    {
-                      "name": "plug_type",
-                      "value": "EU"
-                    },
-                    {
-                      "name": "voltage",
-                      "value": "100"
-                    },
-                    {
-                      "name": "connection_gender",
-                      "value": "gender of the connection"
-                    },
-                    {
-                      "name": "battery_capacity",
-                      "value": "100 mAh"
-                    },
-                    {
-                      "name": "model",
-                      "value": "product model",
-                      "translations": [
-                        {
-                          "language": "AR",
-                          "value": "محتوى العبوة عربي"
+                        "id": "string",
+                        "name": {
+                            "value": "string",
+                            "translations": [
+                                {
+                                    "language": "string",
+                                    "value": "string"
+                                }
+                            ]
                         },
-                        {
-                          "language": "FR",
-                          "value": "Produit model"
-                        }
-                      ]
-                    },
-                    {
-                      "name": "short_description",
-                      "value": "<ul><li>short description should have at least 4 bullets</li><li>short description </li><li>short description </li><li>short description </li></ul>"
-                    },
-                    {
-                      "name": "color_family",
-                      "value": "Black"
-                    },
-                    {
-                      "name": "color",
-                      "value": "Black"
-                    },
-                    {
-                      "name": "warranty_duration",
-                      "value": "10"
-                    }
-                  ]
-                },
-                {
-                  "name": {
-                    "value": "Name of another variation of the product between 15 and 60 characters",
-                    "translations": [
-                      {
-                        "language": "AR",
-                        "value": "اختبار اسم المنتج"
-                      },
-                      {
-                        "language": "FR",
-                        "value": "Test du nom du produit"
-                      }
-                    ]
-                  },
-                  "description": {
-                    "value": "Description should have more than 150 words. Product number35G41EAProduct nameHP Spectre x360 Convertible 14-ea0047naMicroprocessorIntel® Core™ i5-1135G7 (up to 4.2 GHz with Intel® Turbo Boost Technology, 8 MB L3 cache, 4 cores)ChipsetIntel® Integrated SoCMemory, standard8 GB LPDDR4x-3733 MHz RAM (onboard)Video graphicsIntel® Iris® Xᵉ GraphicsHard drive512 GB PCIe® NVMe™ TLC M.2 SSDOptical driveOptical drive not includedDisplay34.3 cm (13.5) diagonal, WUXGA+ (1920 x 1280), multitouch-enabled, IPS, edge-to-edge glass, micro-edge, Corning® Gorilla® Glass NBT™, 1000 nits, 100% sRGB, HP Sure View Reflect integrated privacy screenWireless connectivityIntel® Wi-Fi 6 AX201 (2x2) and Bluetooth® 5 combo (Supporting Gigabit file transfer speeds)Expansion slots1 microSD media card readerExternal ports2 Thunderbolt™ 4 with USB4™ Type-C® 40Gbps signaling rate (USB Power Delivery, DisplayPort™ 1.4, HP Sleep and Charge); 1 SuperSpeed USB Type-A 10Gbps signaling rate (HP Sleep and Charge); 1 headphone/microphone comboMinimum dimensions (W x D x H)29.83 x 22.01 x 1.69 cmWeight1.34 kgPower supply type65 W USB Type-C® power adapterBattery type4-cell, 66 Wh Li-ion polymerBattery life mixed usageUp to 15 hours and 45 minutesVideo Playback Battery lifeUp to 16 hours and 30 minutesWebcamHP True Vision 720p HD IR camera with camera shutter and integrated dual array digital microphonesAudio featuresAudio by Bang & Olufsen; Quad speakers; HP Audio BoostSoftwareOperating systemWindows 10 Home 64HP appsHP 3D DriveGuard; HP Audio Switch; HP JumpStart; HP Support AssistantSoftware includedMcAfee LiveSafe™Pre-installed softwareExpressVPN (30 day free trial); LastPass Premium (30 day free trial).",
-                    "translations": [
-                      {
-                        "language": "AR",
-                        "value": "اختبار اسم المنتج"
-                      },
-                      {
-                        "language": "FR",
-                        "value": "Test du description du produit"
-                      }
-                    ]
-                  },
-                  "parentSku": "new_product_sku_60077999",
-                  "sellerSku": "new_product_sku_60078000",
-                  "barcodeEan": "1234567000003459999",
-                  "variation": "2",
-                  "brand": {
-                    "code": 1126253,
-                    "name": "123 updated"
-                  },
-                  "category": {
-                    "code": 1004141,
-                    "name": "Gaming / PC Gaming / Accessories / Controllers"
-                  },
-                  "additionalCategories": [],
-                  "images": [
-                    {
-                      "url": "https://ng.jumia.is/LgDWyaUAUqlaDlr6gmf0ui43GGk=/fit-in/500x500/filters:fill(white)/product/90/278208/1.jpg?4790",
-                      "primary": True
-                    },
-                    {
-                      "url": "https://ng.jumia.is/W-t47t1CIN1cl_y6KcnaM5Z-PjM=/fit-in/500x500/filters:fill(white)/product/90/278208/2.jpg?4790",
-                      "primary": False
-                    }
-                  ],
-                  "price": {
-                    "value": 200,
-                    "salePrice": {
-                      "value": 150,
-                      "startAt": "2022-08-11 15:00",
-                      "endAt": "2022-08-22 17:00"
-                    }
-                  },
-                  "stock": 500,
-                  "attributes": [
-                    {
-                      "name": "isbn",
-                      "value": "0-6280-1750-2"
-                    },
-                    {
-                      "name": "note",
-                      "value": "note about the product"
-                    },
-                    {
-                      "name": "plug_type",
-                      "value": "EU"
-                    },
-                    {
-                      "name": "voltage",
-                      "value": "100"
-                    },
-                    {
-                      "name": "connection_gender",
-                      "value": "gender of the connection"
-                    },
-                    {
-                      "name": "battery_capacity",
-                      "value": "100 mAh"
-                    },
-                    {
-                      "name": "model",
-                      "value": "product model",
-                      "translations": [
-                        {
-                          "language": "AR",
-                          "value": "محتوى العبوة عربي"
+                        "description": {
+                            "value": "string",
+                            "translations": [
+                                {
+                                    "language": "string",
+                                    "value": "string"
+                                }
+                            ]
                         },
-                        {
-                          "language": "FR",
-                          "value": "Produit model"
-                        }
-                      ]
-                    },
-                    {
-                      "name": "short_description",
-                      "value": "<ul><li>short description should have at least 4 bullets</li><li>short description </li><li>short description </li><li>short description </li></ul>"
-                    },
-                    {
-                      "name": "color_family",
-                      "value": "Brown"
-                    },
-                    {
-                      "name": "color",
-                      "value": "Brown"
-                    },
-                    {
-                      "name": "warranty_duration",
-                      "value": "10"
+                        "parentSku": "string",
+                        "sellerSku": "string",
+                        "barcodeEan": "string",
+                        "brand": {
+                            "code": 0,
+                            "name": "string"
+                        },
+                        "category": {
+                            "code": 0,
+                            "name": "string"
+                        },
+                        "additionalCategories": [
+                            {
+                                "code": 0,
+                                "name": "string"
+                            }
+                        ],
+                        "images": [
+                            {
+                                "url": "string",
+                                "primary": True
+                            }
+                        ],
+                        "price": {
+                            "value": 0,
+                            "salePrice": {
+                                "value": 0,
+                                "startAt": "string",
+                                "endAt": "string"
+                            }
+                        },
+                        "stock": 0,
+                        "attributes": [
+                            {
+                                "name": "string",
+                                "value": "string",
+                                "translations": [
+                                    {
+                                        "language": "string",
+                                        "value": "string"
+                                    }
+                                ]
+                            }
+                        ]
                     }
-                  ]
-                }
-              ]
+                ]
             }
+            headers = {"Authorization": "Bearer "}
 
-            headers = {
-              "Content-Type": "application/json",
-              "Authorization": "string"
-            }
+            response = requests.request("POST", url, json=payload, headers=headers)
 
-            response = requests.post(url, json=payload, headers=headers)
-
-            data = response.json()
-            print(data)
+            print(response.text)
         - lang: 'java'
           source: | 
-            import java.net.*;
-            import java.net.http.*;
-            import java.util.*;
-
-            public class App {
-              public static void main(String[] args) throws Exception {
-                var httpClient = HttpClient.newBuilder().build();
-
-                var payload = String.join("\n"
-                  , "{"
-                  , " \"shopId\": \"a8b5534b-277b-449c-97b7-c00979dd9c3a\","
-                  , " \"products\": ["
-                  , "  {"
-                  , "   \"name\": {"
-                  , "    \"value\": \"Name of one variation of the product between 15 and 60 characters\","
-                  , "    \"translations\": ["
-                  , "     {"
-                  , "      \"language\": \"AR\","
-                  , "      \"value\": \"اختبار اسم المنتج\""
-                  , "     },"
-                  , "     {"
-                  , "      \"language\": \"FR\","
-                  , "      \"value\": \"Test du nom du produit\""
-                  , "     }"
-                  , "    ]"
-                  , "   },"
-                  , "   \"description\": {"
-                  , "    \"value\": \"Description should have more than 150 words. Product number35G41EAProduct nameHP Spectre x360 Convertible 14-ea0047naMicroprocessorIntel® Core™ i5-1135G7 (up to 4.2 GHz with Intel® Turbo Boost Technology, 8 MB L3 cache, 4 cores)ChipsetIntel® Integrated SoCMemory, standard8 GB LPDDR4x-3733 MHz RAM (onboard)Video graphicsIntel® Iris® Xᵉ GraphicsHard drive512 GB PCIe® NVMe™ TLC M.2 SSDOptical driveOptical drive not includedDisplay34.3 cm (13.5) diagonal, WUXGA+ (1920 x 1280), multitouch-enabled, IPS, edge-to-edge glass, micro-edge, Corning® Gorilla® Glass NBT™, 1000 nits, 100% sRGB, HP Sure View Reflect integrated privacy screenWireless connectivityIntel® Wi-Fi 6 AX201 (2x2) and Bluetooth® 5 combo (Supporting Gigabit file transfer speeds)Expansion slots1 microSD media card readerExternal ports2 Thunderbolt™ 4 with USB4™ Type-C® 40Gbps signaling rate (USB Power Delivery, DisplayPort™ 1.4, HP Sleep and Charge); 1 SuperSpeed USB Type-A 10Gbps signaling rate (HP Sleep and Charge); 1 headphone/microphone comboMinimum dimensions (W x D x H)29.83 x 22.01 x 1.69 cmWeight1.34 kgPower supply type65 W USB Type-C® power adapterBattery type4-cell, 66 Wh Li-ion polymerBattery life mixed usageUp to 15 hours and 45 minutesVideo Playback Battery lifeUp to 16 hours and 30 minutesWebcamHP True Vision 720p HD IR camera with camera shutter and integrated dual array digital microphonesAudio featuresAudio by Bang & Olufsen; Quad speakers; HP Audio BoostSoftwareOperating systemWindows 10 Home 64HP appsHP 3D DriveGuard; HP Audio Switch; HP JumpStart; HP Support AssistantSoftware includedMcAfee LiveSafe™Pre-installed softwareExpressVPN (30 day free trial); LastPass Premium (30 day free trial).\","
-                  , "    \"translations\": ["
-                  , "     {"
-                  , "      \"language\": \"AR\","
-                  , "      \"value\": \"اختبار اسم المنتج\""
-                  , "     },"
-                  , "     {"
-                  , "      \"language\": \"FR\","
-                  , "      \"value\": \"Test du description du produit\""
-                  , "     }"
-                  , "    ]"
-                  , "   },"
-                  , "   \"parentSku\": \"new_product_sku_60077999\","
-                  , "   \"sellerSku\": \"new_product_sku_60077999\","
-                  , "   \"barcodeEan\": \"1234567000001239999\","
-                  , "   \"variation\": \"1\","
-                  , "   \"brand\": {"
-                  , "    \"code\": 1126253,"
-                  , "    \"name\": \"123 updated\""
-                  , "   },"
-                  , "   \"category\": {"
-                  , "    \"code\": 1004141,"
-                  , "    \"name\": \"Gaming / PC Gaming / Accessories / Controllers\""
-                  , "   },"
-                  , "   \"additionalCategories\": [],"
-                  , "   \"images\": ["
-                  , "    {"
-                  , "     \"url\": \"https://ng.jumia.is/LgDWyaUAUqlaDlr6gmf0ui43GGk=/fit-in/500x500/filters:fill(white)/product/90/278208/1.jpg?4790\","
-                  , "     \"primary\": true"
-                  , "    },"
-                  , "    {"
-                  , "     \"url\": \"https://ng.jumia.is/W-t47t1CIN1cl_y6KcnaM5Z-PjM=/fit-in/500x500/filters:fill(white)/product/90/278208/2.jpg?4790\","
-                  , "     \"primary\": false"
-                  , "    }"
-                  , "   ],"
-                  , "   \"price\": {"
-                  , "    \"value\": 200,"
-                  , "    \"salePrice\": {"
-                  , "     \"value\": 150,"
-                  , "     \"startAt\": \"2022-08-11 15:00\","
-                  , "     \"endAt\": \"2022-08-22 17:00\""
-                  , "    }"
-                  , "   },"
-                  , "   \"stock\": 500,"
-                  , "   \"attributes\": ["
-                  , "    {"
-                  , "     \"name\": \"isbn\","
-                  , "     \"value\": \"0-6280-1750-2\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"note\","
-                  , "     \"value\": \"note about the product\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"plug_type\","
-                  , "     \"value\": \"EU\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"voltage\","
-                  , "     \"value\": \"100\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"connection_gender\","
-                  , "     \"value\": \"gender of the connection\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"battery_capacity\","
-                  , "     \"value\": \"100 mAh\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"model\","
-                  , "     \"value\": \"product model\","
-                  , "     \"translations\": ["
-                  , "      {"
-                  , "       \"language\": \"AR\","
-                  , "       \"value\": \"محتوى العبوة عربي\""
-                  , "      },"
-                  , "      {"
-                  , "       \"language\": \"FR\","
-                  , "       \"value\": \"Produit model\""
-                  , "      }"
-                  , "     ]"
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"short_description\","
-                  , "     \"value\": \"<ul><li>short description should have at least 4 bullets</li><li>short description </li><li>short description </li><li>short description </li></ul>\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"color_family\","
-                  , "     \"value\": \"Black\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"color\","
-                  , "     \"value\": \"Black\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"warranty_duration\","
-                  , "     \"value\": \"10\""
-                  , "    }"
-                  , "   ]"
-                  , "  },"
-                  , "  {"
-                  , "   \"name\": {"
-                  , "    \"value\": \"Name of another variation of the product between 15 and 60 characters\","
-                  , "    \"translations\": ["
-                  , "     {"
-                  , "      \"language\": \"AR\","
-                  , "      \"value\": \"اختبار اسم المنتج\""
-                  , "     },"
-                  , "     {"
-                  , "      \"language\": \"FR\","
-                  , "      \"value\": \"Test du nom du produit\""
-                  , "     }"
-                  , "    ]"
-                  , "   },"
-                  , "   \"description\": {"
-                  , "    \"value\": \"Description should have more than 150 words. Product number35G41EAProduct nameHP Spectre x360 Convertible 14-ea0047naMicroprocessorIntel® Core™ i5-1135G7 (up to 4.2 GHz with Intel® Turbo Boost Technology, 8 MB L3 cache, 4 cores)ChipsetIntel® Integrated SoCMemory, standard8 GB LPDDR4x-3733 MHz RAM (onboard)Video graphicsIntel® Iris® Xᵉ GraphicsHard drive512 GB PCIe® NVMe™ TLC M.2 SSDOptical driveOptical drive not includedDisplay34.3 cm (13.5) diagonal, WUXGA+ (1920 x 1280), multitouch-enabled, IPS, edge-to-edge glass, micro-edge, Corning® Gorilla® Glass NBT™, 1000 nits, 100% sRGB, HP Sure View Reflect integrated privacy screenWireless connectivityIntel® Wi-Fi 6 AX201 (2x2) and Bluetooth® 5 combo (Supporting Gigabit file transfer speeds)Expansion slots1 microSD media card readerExternal ports2 Thunderbolt™ 4 with USB4™ Type-C® 40Gbps signaling rate (USB Power Delivery, DisplayPort™ 1.4, HP Sleep and Charge); 1 SuperSpeed USB Type-A 10Gbps signaling rate (HP Sleep and Charge); 1 headphone/microphone comboMinimum dimensions (W x D x H)29.83 x 22.01 x 1.69 cmWeight1.34 kgPower supply type65 W USB Type-C® power adapterBattery type4-cell, 66 Wh Li-ion polymerBattery life mixed usageUp to 15 hours and 45 minutesVideo Playback Battery lifeUp to 16 hours and 30 minutesWebcamHP True Vision 720p HD IR camera with camera shutter and integrated dual array digital microphonesAudio featuresAudio by Bang & Olufsen; Quad speakers; HP Audio BoostSoftwareOperating systemWindows 10 Home 64HP appsHP 3D DriveGuard; HP Audio Switch; HP JumpStart; HP Support AssistantSoftware includedMcAfee LiveSafe™Pre-installed softwareExpressVPN (30 day free trial); LastPass Premium (30 day free trial).\","
-                  , "    \"translations\": ["
-                  , "     {"
-                  , "      \"language\": \"AR\","
-                  , "      \"value\": \"اختبار اسم المنتج\""
-                  , "     },"
-                  , "     {"
-                  , "      \"language\": \"FR\","
-                  , "      \"value\": \"Test du description du produit\""
-                  , "     }"
-                  , "    ]"
-                  , "   },"
-                  , "   \"parentSku\": \"new_product_sku_60077999\","
-                  , "   \"sellerSku\": \"new_product_sku_60078000\","
-                  , "   \"barcodeEan\": \"1234567000003459999\","
-                  , "   \"variation\": \"2\","
-                  , "   \"brand\": {"
-                  , "    \"code\": 1126253,"
-                  , "    \"name\": \"123 updated\""
-                  , "   },"
-                  , "   \"category\": {"
-                  , "    \"code\": 1004141,"
-                  , "    \"name\": \"Gaming / PC Gaming / Accessories / Controllers\""
-                  , "   },"
-                  , "   \"additionalCategories\": [],"
-                  , "   \"images\": ["
-                  , "    {"
-                  , "     \"url\": \"https://ng.jumia.is/LgDWyaUAUqlaDlr6gmf0ui43GGk=/fit-in/500x500/filters:fill(white)/product/90/278208/1.jpg?4790\","
-                  , "     \"primary\": true"
-                  , "    },"
-                  , "    {"
-                  , "     \"url\": \"https://ng.jumia.is/W-t47t1CIN1cl_y6KcnaM5Z-PjM=/fit-in/500x500/filters:fill(white)/product/90/278208/2.jpg?4790\","
-                  , "     \"primary\": false"
-                  , "    }"
-                  , "   ],"
-                  , "   \"price\": {"
-                  , "    \"value\": 200,"
-                  , "    \"salePrice\": {"
-                  , "     \"value\": 150,"
-                  , "     \"startAt\": \"2022-08-11 15:00\","
-                  , "     \"endAt\": \"2022-08-22 17:00\""
-                  , "    }"
-                  , "   },"
-                  , "   \"stock\": 500,"
-                  , "   \"attributes\": ["
-                  , "    {"
-                  , "     \"name\": \"isbn\","
-                  , "     \"value\": \"0-6280-1750-2\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"note\","
-                  , "     \"value\": \"note about the product\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"plug_type\","
-                  , "     \"value\": \"EU\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"voltage\","
-                  , "     \"value\": \"100\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"connection_gender\","
-                  , "     \"value\": \"gender of the connection\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"battery_capacity\","
-                  , "     \"value\": \"100 mAh\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"model\","
-                  , "     \"value\": \"product model\","
-                  , "     \"translations\": ["
-                  , "      {"
-                  , "       \"language\": \"AR\","
-                  , "       \"value\": \"محتوى العبوة عربي\""
-                  , "      },"
-                  , "      {"
-                  , "       \"language\": \"FR\","
-                  , "       \"value\": \"Produit model\""
-                  , "      }"
-                  , "     ]"
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"short_description\","
-                  , "     \"value\": \"<ul><li>short description should have at least 4 bullets</li><li>short description </li><li>short description </li><li>short description </li></ul>\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"color_family\","
-                  , "     \"value\": \"Brown\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"color\","
-                  , "     \"value\": \"Brown\""
-                  , "    },"
-                  , "    {"
-                  , "     \"name\": \"warranty_duration\","
-                  , "     \"value\": \"10\""
-                  , "    }"
-                  , "   ]"
-                  , "  }"
-                  , " ]"
-                  , "}"
-                );
-
-                var host = "https://vendor-api-staging.jumia.com";
-                var pathname = "/feeds/products/update";
-                var request = HttpRequest.newBuilder()
-                  .POST(HttpRequest.BodyPublishers.ofString(payload))
-                  .uri(URI.create(host + pathname ))
-                  .header("Content-Type", "application/json")
-                  .header("Authorization", "string")
-                  .build();
-
-                var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-                System.out.println(response.body());
-              }
-            }
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://vendor-api-staging.jumia.com/feeds/products/update"))
+                .header("Authorization", "Bearer ")
+                .method("POST", HttpRequest.BodyPublishers.ofString("{\n  \"shopId\": \"string\",\n  \"products\": [\n    {\n      \"id\": \"string\",\n      \"name\": {\n        \"value\": \"string\",\n        \"translations\": [\n          {\n            \"language\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      \"description\": {\n        \"value\": \"string\",\n        \"translations\": [\n          {\n            \"language\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      \"parentSku\": \"string\",\n      \"sellerSku\": \"string\",\n      \"barcodeEan\": \"string\",\n      \"brand\": {\n        \"code\": 0,\n        \"name\": \"string\"\n      },\n      \"category\": {\n        \"code\": 0,\n        \"name\": \"string\"\n      },\n      \"additionalCategories\": [\n        {\n          \"code\": 0,\n          \"name\": \"string\"\n        }\n      ],\n      \"images\": [\n        {\n          \"url\": \"string\",\n          \"primary\": true\n        }\n      ],\n      \"price\": {\n        \"value\": 0,\n        \"salePrice\": {\n          \"value\": 0,\n          \"startAt\": \"string\",\n          \"endAt\": \"string\"\n        }\n      },\n      \"stock\": 0,\n      \"attributes\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"translations\": [\n            {\n              \"language\": \"string\",\n              \"value\": \"string\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}"))
+                .build();
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
         - lang: 'go'
           source: | 
             package main
 
             import (
               "fmt"
-              "bytes"
+              "strings"
               "net/http"
               "io/ioutil"
             )
 
             func main() {
-              reqUrl := "https://vendor-api-staging.jumia.com/feeds/products/update"
-              var data = []byte(`{
-                "shopId": "a8b5534b-277b-449c-97b7-c00979dd9c3a",
-                "products": [
-                  {
-                    "name": {
-                      "value": "Name of one variation of the product between 15 and 60 characters",
-                      "translations": [
-                        {
-                          "language": "AR",
-                          "value": "اختبار اسم المنتج"
-                        },
-                        {
-                          "language": "FR",
-                          "value": "Test du nom du produit"
-                        }
-                      ]
-                    },
-                    "description": {
-                      "value": "Description should have more than 150 words. Product number35G41EAProduct nameHP Spectre x360 Convertible 14-ea0047naMicroprocessorIntel® Core™ i5-1135G7 (up to 4.2 GHz with Intel® Turbo Boost Technology, 8 MB L3 cache, 4 cores)ChipsetIntel® Integrated SoCMemory, standard8 GB LPDDR4x-3733 MHz RAM (onboard)Video graphicsIntel® Iris® Xᵉ GraphicsHard drive512 GB PCIe® NVMe™ TLC M.2 SSDOptical driveOptical drive not includedDisplay34.3 cm (13.5) diagonal, WUXGA+ (1920 x 1280), multitouch-enabled, IPS, edge-to-edge glass, micro-edge, Corning® Gorilla® Glass NBT™, 1000 nits, 100% sRGB, HP Sure View Reflect integrated privacy screenWireless connectivityIntel® Wi-Fi 6 AX201 (2x2) and Bluetooth® 5 combo (Supporting Gigabit file transfer speeds)Expansion slots1 microSD media card readerExternal ports2 Thunderbolt™ 4 with USB4™ Type-C® 40Gbps signaling rate (USB Power Delivery, DisplayPort™ 1.4, HP Sleep and Charge); 1 SuperSpeed USB Type-A 10Gbps signaling rate (HP Sleep and Charge); 1 headphone/microphone comboMinimum dimensions (W x D x H)29.83 x 22.01 x 1.69 cmWeight1.34 kgPower supply type65 W USB Type-C® power adapterBattery type4-cell, 66 Wh Li-ion polymerBattery life mixed usageUp to 15 hours and 45 minutesVideo Playback Battery lifeUp to 16 hours and 30 minutesWebcamHP True Vision 720p HD IR camera with camera shutter and integrated dual array digital microphonesAudio featuresAudio by Bang & Olufsen; Quad speakers; HP Audio BoostSoftwareOperating systemWindows 10 Home 64HP appsHP 3D DriveGuard; HP Audio Switch; HP JumpStart; HP Support AssistantSoftware includedMcAfee LiveSafe™Pre-installed softwareExpressVPN (30 day free trial); LastPass Premium (30 day free trial).",
-                      "translations": [
-                        {
-                          "language": "AR",
-                          "value": "اختبار اسم المنتج"
-                        },
-                        {
-                          "language": "FR",
-                          "value": "Test du description du produit"
-                        }
-                      ]
-                    },
-                    "parentSku": "new_product_sku_60077999",
-                    "sellerSku": "new_product_sku_60077999",
-                    "barcodeEan": "1234567000001239999",
-                    "variation": "1",
-                    "brand": {
-                      "code": 1126253,
-                      "name": "123 updated"
-                    },
-                    "category": {
-                      "code": 1004141,
-                      "name": "Gaming / PC Gaming / Accessories / Controllers"
-                    },
-                    "additionalCategories": [],
-                    "images": [
-                      {
-                        "url": "https://ng.jumia.is/LgDWyaUAUqlaDlr6gmf0ui43GGk=/fit-in/500x500/filters:fill(white)/product/90/278208/1.jpg?4790",
-                        "primary": true
-                      },
-                      {
-                        "url": "https://ng.jumia.is/W-t47t1CIN1cl_y6KcnaM5Z-PjM=/fit-in/500x500/filters:fill(white)/product/90/278208/2.jpg?4790",
-                        "primary": false
-                      }
-                    ],
-                    "price": {
-                      "value": 200,
-                      "salePrice": {
-                        "value": 150,
-                        "startAt": "2022-08-11 15:00",
-                        "endAt": "2022-08-22 17:00"
-                      }
-                    },
-                    "stock": 500,
-                    "attributes": [
-                      {
-                        "name": "isbn",
-                        "value": "0-6280-1750-2"
-                      },
-                      {
-                        "name": "note",
-                        "value": "note about the product"
-                      },
-                      {
-                        "name": "plug_type",
-                        "value": "EU"
-                      },
-                      {
-                        "name": "voltage",
-                        "value": "100"
-                      },
-                      {
-                        "name": "connection_gender",
-                        "value": "gender of the connection"
-                      },
-                      {
-                        "name": "battery_capacity",
-                        "value": "100 mAh"
-                      },
-                      {
-                        "name": "model",
-                        "value": "product model",
-                        "translations": [
-                          {
-                            "language": "AR",
-                            "value": "محتوى العبوة عربي"
-                          },
-                          {
-                            "language": "FR",
-                            "value": "Produit model"
-                          }
-                        ]
-                      },
-                      {
-                        "name": "short_description",
-                        "value": "<ul><li>short description should have at least 4 bullets</li><li>short description </li><li>short description </li><li>short description </li></ul>"
-                      },
-                      {
-                        "name": "color_family",
-                        "value": "Black"
-                      },
-                      {
-                        "name": "color",
-                        "value": "Black"
-                      },
-                      {
-                        "name": "warranty_duration",
-                        "value": "10"
-                      }
-                    ]
-                  },
-                  {
-                    "name": {
-                      "value": "Name of another variation of the product between 15 and 60 characters",
-                      "translations": [
-                        {
-                          "language": "AR",
-                          "value": "اختبار اسم المنتج"
-                        },
-                        {
-                          "language": "FR",
-                          "value": "Test du nom du produit"
-                        }
-                      ]
-                    },
-                    "description": {
-                      "value": "Description should have more than 150 words. Product number35G41EAProduct nameHP Spectre x360 Convertible 14-ea0047naMicroprocessorIntel® Core™ i5-1135G7 (up to 4.2 GHz with Intel® Turbo Boost Technology, 8 MB L3 cache, 4 cores)ChipsetIntel® Integrated SoCMemory, standard8 GB LPDDR4x-3733 MHz RAM (onboard)Video graphicsIntel® Iris® Xᵉ GraphicsHard drive512 GB PCIe® NVMe™ TLC M.2 SSDOptical driveOptical drive not includedDisplay34.3 cm (13.5) diagonal, WUXGA+ (1920 x 1280), multitouch-enabled, IPS, edge-to-edge glass, micro-edge, Corning® Gorilla® Glass NBT™, 1000 nits, 100% sRGB, HP Sure View Reflect integrated privacy screenWireless connectivityIntel® Wi-Fi 6 AX201 (2x2) and Bluetooth® 5 combo (Supporting Gigabit file transfer speeds)Expansion slots1 microSD media card readerExternal ports2 Thunderbolt™ 4 with USB4™ Type-C® 40Gbps signaling rate (USB Power Delivery, DisplayPort™ 1.4, HP Sleep and Charge); 1 SuperSpeed USB Type-A 10Gbps signaling rate (HP Sleep and Charge); 1 headphone/microphone comboMinimum dimensions (W x D x H)29.83 x 22.01 x 1.69 cmWeight1.34 kgPower supply type65 W USB Type-C® power adapterBattery type4-cell, 66 Wh Li-ion polymerBattery life mixed usageUp to 15 hours and 45 minutesVideo Playback Battery lifeUp to 16 hours and 30 minutesWebcamHP True Vision 720p HD IR camera with camera shutter and integrated dual array digital microphonesAudio featuresAudio by Bang & Olufsen; Quad speakers; HP Audio BoostSoftwareOperating systemWindows 10 Home 64HP appsHP 3D DriveGuard; HP Audio Switch; HP JumpStart; HP Support AssistantSoftware includedMcAfee LiveSafe™Pre-installed softwareExpressVPN (30 day free trial); LastPass Premium (30 day free trial).",
-                      "translations": [
-                        {
-                          "language": "AR",
-                          "value": "اختبار اسم المنتج"
-                        },
-                        {
-                          "language": "FR",
-                          "value": "Test du description du produit"
-                        }
-                      ]
-                    },
-                    "parentSku": "new_product_sku_60077999",
-                    "sellerSku": "new_product_sku_60078000",
-                    "barcodeEan": "1234567000003459999",
-                    "variation": "2",
-                    "brand": {
-                      "code": 1126253,
-                      "name": "123 updated"
-                    },
-                    "category": {
-                      "code": 1004141,
-                      "name": "Gaming / PC Gaming / Accessories / Controllers"
-                    },
-                    "additionalCategories": [],
-                    "images": [
-                      {
-                        "url": "https://ng.jumia.is/LgDWyaUAUqlaDlr6gmf0ui43GGk=/fit-in/500x500/filters:fill(white)/product/90/278208/1.jpg?4790",
-                        "primary": true
-                      },
-                      {
-                        "url": "https://ng.jumia.is/W-t47t1CIN1cl_y6KcnaM5Z-PjM=/fit-in/500x500/filters:fill(white)/product/90/278208/2.jpg?4790",
-                        "primary": false
-                      }
-                    ],
-                    "price": {
-                      "value": 200,
-                      "salePrice": {
-                        "value": 150,
-                        "startAt": "2022-08-11 15:00",
-                        "endAt": "2022-08-22 17:00"
-                      }
-                    },
-                    "stock": 500,
-                    "attributes": [
-                      {
-                        "name": "isbn",
-                        "value": "0-6280-1750-2"
-                      },
-                      {
-                        "name": "note",
-                        "value": "note about the product"
-                      },
-                      {
-                        "name": "plug_type",
-                        "value": "EU"
-                      },
-                      {
-                        "name": "voltage",
-                        "value": "100"
-                      },
-                      {
-                        "name": "connection_gender",
-                        "value": "gender of the connection"
-                      },
-                      {
-                        "name": "battery_capacity",
-                        "value": "100 mAh"
-                      },
-                      {
-                        "name": "model",
-                        "value": "product model",
-                        "translations": [
-                          {
-                            "language": "AR",
-                            "value": "محتوى العبوة عربي"
-                          },
-                          {
-                            "language": "FR",
-                            "value": "Produit model"
-                          }
-                        ]
-                      },
-                      {
-                        "name": "short_description",
-                        "value": "<ul><li>short description should have at least 4 bullets</li><li>short description </li><li>short description </li><li>short description </li></ul>"
-                      },
-                      {
-                        "name": "color_family",
-                        "value": "Brown"
-                      },
-                      {
-                        "name": "color",
-                        "value": "Brown"
-                      },
-                      {
-                        "name": "warranty_duration",
-                        "value": "10"
-                      }
-                    ]
-                  }
-                ]
-              }`)
-              req, _ := http.NewRequest("POST", reqUrl, bytes.NewBuffer(data))
-              req.Header.Add("Content-Type", "application/json")
-              req.Header.Add("Authorization", "string")
+
+              url := "https://vendor-api-staging.jumia.com/feeds/products/update"
+
+              payload := strings.NewReader("{\n  \"shopId\": \"string\",\n  \"products\": [\n    {\n      \"id\": \"string\",\n      \"name\": {\n        \"value\": \"string\",\n        \"translations\": [\n          {\n            \"language\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      \"description\": {\n        \"value\": \"string\",\n        \"translations\": [\n          {\n            \"language\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      \"parentSku\": \"string\",\n      \"sellerSku\": \"string\",\n      \"barcodeEan\": \"string\",\n      \"brand\": {\n        \"code\": 0,\n        \"name\": \"string\"\n      },\n      \"category\": {\n        \"code\": 0,\n        \"name\": \"string\"\n      },\n      \"additionalCategories\": [\n        {\n          \"code\": 0,\n          \"name\": \"string\"\n        }\n      ],\n      \"images\": [\n        {\n          \"url\": \"string\",\n          \"primary\": true\n        }\n      ],\n      \"price\": {\n        \"value\": 0,\n        \"salePrice\": {\n          \"value\": 0,\n          \"startAt\": \"string\",\n          \"endAt\": \"string\"\n        }\n      },\n      \"stock\": 0,\n      \"attributes\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"translations\": [\n            {\n              \"language\": \"string\",\n              \"value\": \"string\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}")
+
+              req, _ := http.NewRequest("POST", url, payload)
+
+              req.Header.Add("Authorization", "Bearer ")
+
               res, _ := http.DefaultClient.Do(req)
+
               defer res.Body.Close()
               body, _ := ioutil.ReadAll(res.Body)
 
               fmt.Println(res)
               fmt.Println(string(body))
+
             }
         - lang: 'php'
           source: | 
-            /**
-            * Requires libcurl
-            */
+            <?php
 
             $curl = curl_init();
 
-            $payload = array(
-              "shopId" => "a8b5534b-277b-449c-97b7-c00979dd9c3a",
-              "products" => array(
-                array(
-                  "name" => array(
-                    "value" => "Name of one variation of the product between 15 and 60 characters",
-                    "translations" => array(
-                      array(
-                        "language" => "AR",
-                        "value" => "اختبار اسم المنتج"
-                      ),
-                      array(
-                        "language" => "FR",
-                        "value" => "Test du nom du produit"
-                      )
-                    )
-                  ),
-                  "description" => array(
-                    "value" => "Description should have more than 150 words. Product number35G41EAProduct nameHP Spectre x360 Convertible 14-ea0047naMicroprocessorIntel® Core™ i5-1135G7 (up to 4.2 GHz with Intel® Turbo Boost Technology, 8 MB L3 cache, 4 cores)ChipsetIntel® Integrated SoCMemory, standard8 GB LPDDR4x-3733 MHz RAM (onboard)Video graphicsIntel® Iris® Xᵉ GraphicsHard drive512 GB PCIe® NVMe™ TLC M.2 SSDOptical driveOptical drive not includedDisplay34.3 cm (13.5) diagonal, WUXGA+ (1920 x 1280), multitouch-enabled, IPS, edge-to-edge glass, micro-edge, Corning® Gorilla® Glass NBT™, 1000 nits, 100% sRGB, HP Sure View Reflect integrated privacy screenWireless connectivityIntel® Wi-Fi 6 AX201 (2x2) and Bluetooth® 5 combo (Supporting Gigabit file transfer speeds)Expansion slots1 microSD media card readerExternal ports2 Thunderbolt™ 4 with USB4™ Type-C® 40Gbps signaling rate (USB Power Delivery, DisplayPort™ 1.4, HP Sleep and Charge); 1 SuperSpeed USB Type-A 10Gbps signaling rate (HP Sleep and Charge); 1 headphone/microphone comboMinimum dimensions (W x D x H)29.83 x 22.01 x 1.69 cmWeight1.34 kgPower supply type65 W USB Type-C® power adapterBattery type4-cell, 66 Wh Li-ion polymerBattery life mixed usageUp to 15 hours and 45 minutesVideo Playback Battery lifeUp to 16 hours and 30 minutesWebcamHP True Vision 720p HD IR camera with camera shutter and integrated dual array digital microphonesAudio featuresAudio by Bang & Olufsen; Quad speakers; HP Audio BoostSoftwareOperating systemWindows 10 Home 64HP appsHP 3D DriveGuard; HP Audio Switch; HP JumpStart; HP Support AssistantSoftware includedMcAfee LiveSafe™Pre-installed softwareExpressVPN (30 day free trial); LastPass Premium (30 day free trial).",
-                    "translations" => array(
-                      array(
-                        "language" => "AR",
-                        "value" => "اختبار اسم المنتج"
-                      ),
-                      array(
-                        "language" => "FR",
-                        "value" => "Test du description du produit"
-                      )
-                    )
-                  ),
-                  "parentSku" => "new_product_sku_60077999",
-                  "sellerSku" => "new_product_sku_60077999",
-                  "barcodeEan" => "1234567000001239999",
-                  "variation" => "1",
-                  "brand" => array(
-                    "code" => 1126253,
-                    "name" => "123 updated"
-                  ),
-                  "category" => array(
-                    "code" => 1004141,
-                    "name" => "Gaming / PC Gaming / Accessories / Controllers"
-                  ),
-                  "additionalCategories" => array(),
-                  "images" => array(
-                    array(
-                      "url" => "https://ng.jumia.is/LgDWyaUAUqlaDlr6gmf0ui43GGk=/fit-in/500x500/filters:fill(white)/product/90/278208/1.jpg?4790",
-                      "primary" => true
-                    ),
-                    array(
-                      "url" => "https://ng.jumia.is/W-t47t1CIN1cl_y6KcnaM5Z-PjM=/fit-in/500x500/filters:fill(white)/product/90/278208/2.jpg?4790",
-                      "primary" => false
-                    )
-                  ),
-                  "price" => array(
-                    "value" => 200,
-                    "salePrice" => array(
-                      "value" => 150,
-                      "startAt" => "2022-08-11 15:00",
-                      "endAt" => "2022-08-22 17:00"
-                    )
-                  ),
-                  "stock" => 500,
-                  "attributes" => array(
-                    array(
-                      "name" => "isbn",
-                      "value" => "0-6280-1750-2"
-                    ),
-                    array(
-                      "name" => "note",
-                      "value" => "note about the product"
-                    ),
-                    array(
-                      "name" => "plug_type",
-                      "value" => "EU"
-                    ),
-                    array(
-                      "name" => "voltage",
-                      "value" => "100"
-                    ),
-                    array(
-                      "name" => "connection_gender",
-                      "value" => "gender of the connection"
-                    ),
-                    array(
-                      "name" => "battery_capacity",
-                      "value" => "100 mAh"
-                    ),
-                    array(
-                      "name" => "model",
-                      "value" => "product model",
-                      "translations" => array(
-                        array(
-                          "language" => "AR",
-                          "value" => "محتوى العبوة عربي"
-                        ),
-                        array(
-                          "language" => "FR",
-                          "value" => "Produit model"
-                        )
-                      )
-                    ),
-                    array(
-                      "name" => "short_description",
-                      "value" => "<ul><li>short description should have at least 4 bullets</li><li>short description </li><li>short description </li><li>short description </li></ul>"
-                    ),
-                    array(
-                      "name" => "color_family",
-                      "value" => "Black"
-                    ),
-                    array(
-                      "name" => "color",
-                      "value" => "Black"
-                    ),
-                    array(
-                      "name" => "warranty_duration",
-                      "value" => "10"
-                    )
-                  )
-                ),
-                array(
-                  "name" => array(
-                    "value" => "Name of another variation of the product between 15 and 60 characters",
-                    "translations" => array(
-                      array(
-                        "language" => "AR",
-                        "value" => "اختبار اسم المنتج"
-                      ),
-                      array(
-                        "language" => "FR",
-                        "value" => "Test du nom du produit"
-                      )
-                    )
-                  ),
-                  "description" => array(
-                    "value" => "Description should have more than 150 words. Product number35G41EAProduct nameHP Spectre x360 Convertible 14-ea0047naMicroprocessorIntel® Core™ i5-1135G7 (up to 4.2 GHz with Intel® Turbo Boost Technology, 8 MB L3 cache, 4 cores)ChipsetIntel® Integrated SoCMemory, standard8 GB LPDDR4x-3733 MHz RAM (onboard)Video graphicsIntel® Iris® Xᵉ GraphicsHard drive512 GB PCIe® NVMe™ TLC M.2 SSDOptical driveOptical drive not includedDisplay34.3 cm (13.5) diagonal, WUXGA+ (1920 x 1280), multitouch-enabled, IPS, edge-to-edge glass, micro-edge, Corning® Gorilla® Glass NBT™, 1000 nits, 100% sRGB, HP Sure View Reflect integrated privacy screenWireless connectivityIntel® Wi-Fi 6 AX201 (2x2) and Bluetooth® 5 combo (Supporting Gigabit file transfer speeds)Expansion slots1 microSD media card readerExternal ports2 Thunderbolt™ 4 with USB4™ Type-C® 40Gbps signaling rate (USB Power Delivery, DisplayPort™ 1.4, HP Sleep and Charge); 1 SuperSpeed USB Type-A 10Gbps signaling rate (HP Sleep and Charge); 1 headphone/microphone comboMinimum dimensions (W x D x H)29.83 x 22.01 x 1.69 cmWeight1.34 kgPower supply type65 W USB Type-C® power adapterBattery type4-cell, 66 Wh Li-ion polymerBattery life mixed usageUp to 15 hours and 45 minutesVideo Playback Battery lifeUp to 16 hours and 30 minutesWebcamHP True Vision 720p HD IR camera with camera shutter and integrated dual array digital microphonesAudio featuresAudio by Bang & Olufsen; Quad speakers; HP Audio BoostSoftwareOperating systemWindows 10 Home 64HP appsHP 3D DriveGuard; HP Audio Switch; HP JumpStart; HP Support AssistantSoftware includedMcAfee LiveSafe™Pre-installed softwareExpressVPN (30 day free trial); LastPass Premium (30 day free trial).",
-                    "translations" => array(
-                      array(
-                        "language" => "AR",
-                        "value" => "اختبار اسم المنتج"
-                      ),
-                      array(
-                        "language" => "FR",
-                        "value" => "Test du description du produit"
-                      )
-                    )
-                  ),
-                  "parentSku" => "new_product_sku_60077999",
-                  "sellerSku" => "new_product_sku_60078000",
-                  "barcodeEan" => "1234567000003459999",
-                  "variation" => "2",
-                  "brand" => array(
-                    "code" => 1126253,
-                    "name" => "123 updated"
-                  ),
-                  "category" => array(
-                    "code" => 1004141,
-                    "name" => "Gaming / PC Gaming / Accessories / Controllers"
-                  ),
-                  "additionalCategories" => array(),
-                  "images" => array(
-                    array(
-                      "url" => "https://ng.jumia.is/LgDWyaUAUqlaDlr6gmf0ui43GGk=/fit-in/500x500/filters:fill(white)/product/90/278208/1.jpg?4790",
-                      "primary" => true
-                    ),
-                    array(
-                      "url" => "https://ng.jumia.is/W-t47t1CIN1cl_y6KcnaM5Z-PjM=/fit-in/500x500/filters:fill(white)/product/90/278208/2.jpg?4790",
-                      "primary" => false
-                    )
-                  ),
-                  "price" => array(
-                    "value" => 200,
-                    "salePrice" => array(
-                      "value" => 150,
-                      "startAt" => "2022-08-11 15:00",
-                      "endAt" => "2022-08-22 17:00"
-                    )
-                  ),
-                  "stock" => 500,
-                  "attributes" => array(
-                    array(
-                      "name" => "isbn",
-                      "value" => "0-6280-1750-2"
-                    ),
-                    array(
-                      "name" => "note",
-                      "value" => "note about the product"
-                    ),
-                    array(
-                      "name" => "plug_type",
-                      "value" => "EU"
-                    ),
-                    array(
-                      "name" => "voltage",
-                      "value" => "100"
-                    ),
-                    array(
-                      "name" => "connection_gender",
-                      "value" => "gender of the connection"
-                    ),
-                    array(
-                      "name" => "battery_capacity",
-                      "value" => "100 mAh"
-                    ),
-                    array(
-                      "name" => "model",
-                      "value" => "product model",
-                      "translations" => array(
-                        array(
-                          "language" => "AR",
-                          "value" => "محتوى العبوة عربي"
-                        ),
-                        array(
-                          "language" => "FR",
-                          "value" => "Produit model"
-                        )
-                      )
-                    ),
-                    array(
-                      "name" => "short_description",
-                      "value" => "<ul><li>short description should have at least 4 bullets</li><li>short description </li><li>short description </li><li>short description </li></ul>"
-                    ),
-                    array(
-                      "name" => "color_family",
-                      "value" => "Brown"
-                    ),
-                    array(
-                      "name" => "color",
-                      "value" => "Brown"
-                    ),
-                    array(
-                      "name" => "warranty_duration",
-                      "value" => "10"
-                    )
-                  )
-                )
-              )
-            );
-
             curl_setopt_array($curl, [
-              CURLOPT_HTTPHEADER => [
-                "Authorization: string",
-                "Content-Type: application/json"
-              ],
-              CURLOPT_POSTFIELDS => json_encode($payload),
               CURLOPT_URL => "https://vendor-api-staging.jumia.com/feeds/products/update",
               CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => "{\n  \"shopId\": \"string\",\n  \"products\": [\n    {\n      \"id\": \"string\",\n      \"name\": {\n        \"value\": \"string\",\n        \"translations\": [\n          {\n            \"language\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      \"description\": {\n        \"value\": \"string\",\n        \"translations\": [\n          {\n            \"language\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      \"parentSku\": \"string\",\n      \"sellerSku\": \"string\",\n      \"barcodeEan\": \"string\",\n      \"brand\": {\n        \"code\": 0,\n        \"name\": \"string\"\n      },\n      \"category\": {\n        \"code\": 0,\n        \"name\": \"string\"\n      },\n      \"additionalCategories\": [\n        {\n          \"code\": 0,\n          \"name\": \"string\"\n        }\n      ],\n      \"images\": [\n        {\n          \"url\": \"string\",\n          \"primary\": true\n        }\n      ],\n      \"price\": {\n        \"value\": 0,\n        \"salePrice\": {\n          \"value\": 0,\n          \"startAt\": \"string\",\n          \"endAt\": \"string\"\n        }\n      },\n      \"stock\": 0,\n      \"attributes\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"translations\": [\n            {\n              \"language\": \"string\",\n              \"value\": \"string\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer "
+              ],
             ]);
 
             $response = curl_exec($curl);
-            $error = curl_error($curl);
+            $err = curl_error($curl);
 
             curl_close($curl);
 
-            if ($error) {
-              echo "cURL Error #:" . $error;
+            if ($err) {
+              echo "cURL Error #:" . $err;
             } else {
               echo $response;
             }
@@ -7314,6 +5570,7 @@ paths:
           in: header
           name: Authorization
           description: JWT Token generated by Keycloak and Application ID
+          required: true
       requestBody:
         content:
           application/json:
@@ -7409,144 +5666,89 @@ paths:
             url = "https://vendor-api-staging.jumia.com/consignment-order"
 
             payload = {
-              "shopId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "businessClientCode": "jumia-ma",
-              "shippingDate": "2022-03-25T10:09:00",
-              "comment": "small comment",
-              "products": [
-                {
-                  "sku": "143354654",
-                  "quantity": 1,
-                  "labelCode": "product-a"
-                }
-              ]
+                "shopId": "string",
+                "businessClientCode": "string",
+                "shippingDate": "string",
+                "comment": "string",
+                "products": [
+                    {
+                        "sku": "string",
+                        "quantity": 0,
+                        "labelCode": "string"
+                    }
+                ]
             }
+            headers = {"Authorization": "Bearer "}
 
-            headers = {
-              "Content-Type": "application/json",
-              "Authorization": "string"
-            }
+            response = requests.request("POST", url, json=payload, headers=headers)
 
-            response = requests.post(url, json=payload, headers=headers)
-
-            data = response.json()
-            print(data)
+            print(response.text)
         - lang: 'java'
           source: | 
-            import java.net.*;
-            import java.net.http.*;
-            import java.util.*;
-
-            public class App {
-              public static void main(String[] args) throws Exception {
-                var httpClient = HttpClient.newBuilder().build();
-
-                var payload = String.join("\n"
-                  , "{"
-                  , " \"shopId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\","
-                  , " \"businessClientCode\": \"jumia-ma\","
-                  , " \"shippingDate\": \"2022-03-25T10:09:00\","
-                  , " \"comment\": \"small comment\","
-                  , " \"products\": ["
-                  , "  {"
-                  , "   \"sku\": \"143354654\","
-                  , "   \"quantity\": 1,"
-                  , "   \"labelCode\": \"product-a\""
-                  , "  }"
-                  , " ]"
-                  , "}"
-                );
-
-                var host = "https://vendor-api-staging.jumia.com";
-                var pathname = "/consignment-order";
-                var request = HttpRequest.newBuilder()
-                  .POST(HttpRequest.BodyPublishers.ofString(payload))
-                  .uri(URI.create(host + pathname ))
-                  .header("Content-Type", "application/json")
-                  .header("Authorization", "string")
-                  .build();
-
-                var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-                System.out.println(response.body());
-              }
-            }
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://vendor-api-staging.jumia.com/consignment-order"))
+                .header("Authorization", "Bearer ")
+                .method("POST", HttpRequest.BodyPublishers.ofString("{\n  \"shopId\": \"string\",\n  \"businessClientCode\": \"string\",\n  \"shippingDate\": \"string\",\n  \"comment\": \"string\",\n  \"products\": [\n    {\n      \"sku\": \"string\",\n      \"quantity\": 0,\n      \"labelCode\": \"string\"\n    }\n  ]\n}"))
+                .build();
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
         - lang: 'go'
           source: | 
             package main
 
             import (
               "fmt"
-              "bytes"
+              "strings"
               "net/http"
               "io/ioutil"
             )
 
             func main() {
-              reqUrl := "https://vendor-api-staging.jumia.com/consignment-order"
-              var data = []byte(`{
-                "shopId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "businessClientCode": "jumia-ma",
-                "shippingDate": "2022-03-25T10:09:00",
-                "comment": "small comment",
-                "products": [
-                  {
-                    "sku": "143354654",
-                    "quantity": 1,
-                    "labelCode": "product-a"
-                  }
-                ]
-              }`)
-              req, _ := http.NewRequest("POST", reqUrl, bytes.NewBuffer(data))
-              req.Header.Add("Content-Type", "application/json")
-              req.Header.Add("Authorization", "string")
+
+              url := "https://vendor-api-staging.jumia.com/consignment-order"
+
+              payload := strings.NewReader("{\n  \"shopId\": \"string\",\n  \"businessClientCode\": \"string\",\n  \"shippingDate\": \"string\",\n  \"comment\": \"string\",\n  \"products\": [\n    {\n      \"sku\": \"string\",\n      \"quantity\": 0,\n      \"labelCode\": \"string\"\n    }\n  ]\n}")
+
+              req, _ := http.NewRequest("POST", url, payload)
+
+              req.Header.Add("Authorization", "Bearer ")
+
               res, _ := http.DefaultClient.Do(req)
+
               defer res.Body.Close()
               body, _ := ioutil.ReadAll(res.Body)
 
               fmt.Println(res)
               fmt.Println(string(body))
+
             }
         - lang: 'php'
           source: | 
-            /**
-            * Requires libcurl
-            */
+            <?php
 
             $curl = curl_init();
 
-            $payload = array(
-              "shopId" => "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-              "businessClientCode" => "jumia-ma",
-              "shippingDate" => "2022-03-25T10:09:00",
-              "comment" => "small comment",
-              "products" => array(
-                array(
-                  "sku" => "143354654",
-                  "quantity" => 1,
-                  "labelCode" => "product-a"
-                )
-              )
-            );
-
             curl_setopt_array($curl, [
-              CURLOPT_HTTPHEADER => [
-                "Authorization: string",
-                "Content-Type: application/json"
-              ],
-              CURLOPT_POSTFIELDS => json_encode($payload),
               CURLOPT_URL => "https://vendor-api-staging.jumia.com/consignment-order",
               CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => "{\n  \"shopId\": \"string\",\n  \"businessClientCode\": \"string\",\n  \"shippingDate\": \"string\",\n  \"comment\": \"string\",\n  \"products\": [\n    {\n      \"sku\": \"string\",\n      \"quantity\": 0,\n      \"labelCode\": \"string\"\n    }\n  ]\n}",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer "
+              ],
             ]);
 
             $response = curl_exec($curl);
-            $error = curl_error($curl);
+            $err = curl_error($curl);
 
             curl_close($curl);
 
-            if ($error) {
-              echo "cURL Error #:" . $error;
+            if ($err) {
+              echo "cURL Error #:" . $err;
             } else {
               echo $response;
             }
@@ -7943,50 +6145,23 @@ paths:
 
             url = "https://vendor-api-staging.jumia.com/consignment-stock"
 
-            query = {
-              "businessClientCode": "string",
-              "sku": "string"
-            }
+            querystring = {"businessClientCode":"string","sku":"string"}
 
-            headers = {"Authorization": "string"}
+            payload = ""
+            headers = {"Authorization": "Bearer "}
 
-            response = requests.get(url, headers=headers, params=query)
+            response = requests.request("GET", url, data=payload, headers=headers, params=querystring)
 
-            data = response.json()
-            print(data)
+            print(response.text)
         - lang: 'java'
           source: | 
-            import java.net.*;
-            import java.net.http.*;
-            import java.util.*;
-            import java.nio.charset.StandardCharsets;
-            import java.util.stream.Collectors;
-
-            public class App {
-              public static void main(String[] args) throws Exception {
-                var httpClient = HttpClient.newBuilder().build();
-
-                HashMap<String, String> params = new HashMap<>();
-                params.put("businessClientCode", "string");
-                params.put("sku", "string");
-
-                var query = params.keySet().stream()
-                  .map(key -> key + "=" + URLEncoder.encode(params.get(key), StandardCharsets.UTF_8))
-                  .collect(Collectors.joining("&"));
-
-                var host = "https://vendor-api-staging.jumia.com";
-                var pathname = "/consignment-stock";
-                var request = HttpRequest.newBuilder()
-                  .GET()
-                  .uri(URI.create(host + pathname + '?' + query))
-                  .header("Authorization", "string")
-                  .build();
-
-                var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-                System.out.println(response.body());
-              }
-            }
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://vendor-api-staging.jumia.com/consignment-stock?businessClientCode=string&sku=string"))
+                .header("Authorization", "Bearer ")
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
         - lang: 'go'
           source: | 
             package main
@@ -7998,51 +6173,49 @@ paths:
             )
 
             func main() {
-              reqUrl := "https://vendor-api-staging.jumia.com/consignment-stock"
-              req, _ := http.NewRequest("GET", reqUrl, nil)
 
-              query := req.URL.Query()
-              query.Add("businessClientCode", "string")
-              query.Add("sku", "string")
-              req.URL.RawQuery = query.Encode()
+              url := "https://vendor-api-staging.jumia.com/consignment-stock?businessClientCode=string&sku=string"
 
-              req.Header.Add("Authorization", "string")
+              req, _ := http.NewRequest("GET", url, nil)
+
+              req.Header.Add("Authorization", "Bearer ")
+
               res, _ := http.DefaultClient.Do(req)
+
               defer res.Body.Close()
               body, _ := ioutil.ReadAll(res.Body)
 
               fmt.Println(res)
               fmt.Println(string(body))
+
             }
         - lang: 'php'
           source: | 
-            /**
-            * Requires libcurl
-            */
-
-            $query = array(
-              "businessClientCode" => "string",
-              "sku" => "string"
-            );
+            <?php
 
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_HTTPHEADER => [
-                "Authorization: string"
-              ],
-              CURLOPT_URL => "https://vendor-api-staging.jumia.com/consignment-stock?" . http_build_query($query),
+              CURLOPT_URL => "https://vendor-api-staging.jumia.com/consignment-stock?businessClientCode=string&sku=string",
               CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "GET",
+              CURLOPT_POSTFIELDS => "",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer "
+              ],
             ]);
 
             $response = curl_exec($curl);
-            $error = curl_error($curl);
+            $err = curl_error($curl);
 
             curl_close($curl);
 
-            if ($error) {
-              echo "cURL Error #:" . $error;
+            if ($err) {
+              echo "cURL Error #:" . $err;
             } else {
               echo $response;
             }
@@ -8163,57 +6336,28 @@ paths:
               'https://vendor-api-staging.jumia.com/catalog/stock?token=string&size=10&productSids=0' \
               -H 'Authorization: string'
         - lang: 'python'
-          source: | 
+          source: |
             import requests
 
             url = "https://vendor-api-staging.jumia.com/catalog/stock"
 
-            query = {
-              "token": "string",
-              "size": "10",
-              "productSids": "0"
-            }
+            querystring = {"token":"string","size":"10","productSids":"string"}
 
-            headers = {"Authorization": "string"}
+            payload = ""
+            headers = {"Authorization": "Bearer "}
 
-            response = requests.get(url, headers=headers, params=query)
+            response = requests.request("GET", url, data=payload, headers=headers, params=querystring)
 
-            data = response.json()
-            print(data)
+            print(response.text)
         - lang: 'java'
           source: | 
-            import java.net.*;
-            import java.net.http.*;
-            import java.util.*;
-            import java.nio.charset.StandardCharsets;
-            import java.util.stream.Collectors;
-
-            public class App {
-              public static void main(String[] args) throws Exception {
-                var httpClient = HttpClient.newBuilder().build();
-
-                HashMap<String, String> params = new HashMap<>();
-                params.put("token", "string");
-                params.put("size", "10");
-                params.put("productSids", "0");
-
-                var query = params.keySet().stream()
-                  .map(key -> key + "=" + URLEncoder.encode(params.get(key), StandardCharsets.UTF_8))
-                  .collect(Collectors.joining("&"));
-
-                var host = "https://vendor-api-staging.jumia.com";
-                var pathname = "/catalog/stock";
-                var request = HttpRequest.newBuilder()
-                  .GET()
-                  .uri(URI.create(host + pathname + '?' + query))
-                  .header("Authorization", "string")
-                  .build();
-
-                var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-                System.out.println(response.body());
-              }
-            }
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://vendor-api-staging.jumia.com/catalog/stock?token=string&size=10&productSids=string"))
+                .header("Authorization", "Bearer ")
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
         - lang: 'go'
           source: | 
             package main
@@ -8225,71 +6369,51 @@ paths:
             )
 
             func main() {
-              reqUrl := "https://vendor-api-staging.jumia.com/catalog/stock"
-              req, _ := http.NewRequest("GET", reqUrl, nil)
 
-              query := req.URL.Query()
-              query.Add("token", "string")
-              query.Add("size", "10")
-              query.Add("productSids", "0")
-              req.URL.RawQuery = query.Encode()
+              url := "https://vendor-api-staging.jumia.com/catalog/stock?token=string&size=10&productSids=string"
 
-              req.Header.Add("Authorization", "string")
+              req, _ := http.NewRequest("GET", url, nil)
+
+              req.Header.Add("Authorization", "Bearer ")
+
               res, _ := http.DefaultClient.Do(req)
+
               defer res.Body.Close()
               body, _ := ioutil.ReadAll(res.Body)
 
               fmt.Println(res)
               fmt.Println(string(body))
+
             }
         - lang: 'php'
           source: | 
-            package main
+            <?php
 
-            import (
-              "fmt"
-              "net/http"
-              "io/ioutil"
-            )
+            $curl = curl_init();
 
-            func main() {
-              reqUrl := "https://vendor-api-staging.jumia.com/catalog/stock"
-              req, _ := http.NewRequest("GET", reqUrl, nil)
+            curl_setopt_array($curl, [
+              CURLOPT_URL => "https://vendor-api-staging.jumia.com/catalog/stock?token=string&size=10&productSids=string",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "GET",
+              CURLOPT_POSTFIELDS => "",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer "
+              ],
+            ]);
 
-              query := req.URL.Query()
-              query.Add("token", "string")
-              query.Add("size", "10")
-              query.Add("productSids", "0")
-              req.URL.RawQuery = query.Encode()
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
 
-              req.Header.Add("Authorization", "string")
-              res, _ := http.DefaultClient.Do(req)
-              defer res.Body.Close()
-              body, _ := ioutil.ReadAll(res.Body)
+            curl_close($curl);
 
-              fmt.Println(res)
-              fmt.Println(string(body))
-            }
-              "io/ioutil"
-            )
-
-            func main() {
-              reqUrl := "https://vendor-api-staging.jumia.com/catalog/stock"
-              req, _ := http.NewRequest("GET", reqUrl, nil)
-
-              query := req.URL.Query()
-              query.Add("token", "string")
-              query.Add("size", "10")
-              query.Add("productSids", "0")
-              req.URL.RawQuery = query.Encode()
-
-              req.Header.Add("Authorization", "string")
-              res, _ := http.DefaultClient.Do(req)
-              defer res.Body.Close()
-              body, _ := ioutil.ReadAll(res.Body)
-
-              fmt.Println(res)
-              fmt.Println(string(body))
+            if ($err) {
+              echo "cURL Error #:" . $err;
+            } else {
+              echo $response;
             }
   /login:
     get:
