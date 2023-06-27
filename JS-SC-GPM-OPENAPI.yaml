@@ -8394,55 +8394,20 @@ paths:
 
           url = "https://vendor-api-staging.jumia.com/login"
 
-          query = {
-            "client_id": "string",
-            "response_type": "code",
-            "scope": "openid",
-            "prompt": "login",
-            "redirect_uri": "string",
-            "state": "string"
-          }
+          querystring = {"client_id":"18dbd821-a001-4466-aa40-3dbed5b640da","response_type":"code","scope":"openid","prompt":"login","redirect_uri":"http://localhost/token"}
 
-          response = requests.get(url, params=query)
+          payload = ""
+          response = requests.request("GET", url, data=payload, params=querystring)
 
-          data = response.json()
-          print(data)
+          print(response.text)
       - lang: 'java'
         source: |
-          import java.net.*;
-          import java.net.http.*;
-          import java.util.*;
-          import java.nio.charset.StandardCharsets;
-          import java.util.stream.Collectors;
-
-          public class App {
-            public static void main(String[] args) throws Exception {
-              var httpClient = HttpClient.newBuilder().build();
-
-              HashMap<String, String> params = new HashMap<>();
-              params.put("client_id", "string");
-              params.put("response_type", "code");
-              params.put("scope", "openid");
-              params.put("prompt", "login");
-              params.put("redirect_uri", "string");
-              params.put("state", "string");
-
-              var query = params.keySet().stream()
-                .map(key -> key + "=" + URLEncoder.encode(params.get(key), StandardCharsets.UTF_8))
-                .collect(Collectors.joining("&"));
-
-              var host = "https://vendor-api-staging.jumia.com";
-              var pathname = "/login";
-              var request = HttpRequest.newBuilder()
-                .GET()
-                .uri(URI.create(host + pathname + '?' + query))
-                .build();
-
-              var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-              System.out.println(response.body());
-            }
-          }
+          HttpRequest request = HttpRequest.newBuilder()
+              .uri(URI.create("https://vendor-api-staging.jumia.com/login?client_id=18dbd821-a001-4466-aa40-3dbed5b640da&response_type=code&scope=openid&prompt=login&redirect_uri=http%3A%2F%2Flocalhost%2Ftoken"))
+              .method("GET", HttpRequest.BodyPublishers.noBody())
+              .build();
+          HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+          System.out.println(response.body());
       - lang: 'go'
         source: |
           package main
@@ -8454,67 +8419,47 @@ paths:
           )
 
           func main() {
-            reqUrl := "https://vendor-api-staging.jumia.com/login"
-            req, err := http.NewRequest("GET", reqUrl, nil)
 
-            query := req.URL.Query()
-            query.Add("client_id", "string")
-            query.Add("response_type", "code")
-            query.Add("scope", "openid")
-            query.Add("prompt", "login")
-            query.Add("redirect_uri", "string")
-            query.Add("state", "string")
-            req.URL.RawQuery = query.Encode()
+            url := "https://vendor-api-staging.jumia.com/login?client_id=18dbd821-a001-4466-aa40-3dbed5b640da&response_type=code&scope=openid&prompt=login&redirect_uri=http%3A%2F%2Flocalhost%2Ftoken"
 
-            if err != nil {
-              panic(err)
-            }
-            res, err := http.DefaultClient.Do(req)
-            if err != nil {
-              panic(err)
-            }
+            req, _ := http.NewRequest("GET", url, nil)
+
+            res, _ := http.DefaultClient.Do(req)
+
             defer res.Body.Close()
-            body, err := ioutil.ReadAll(res.Body)
-            if err != nil {
-              panic(err)
-            }
+            body, _ := ioutil.ReadAll(res.Body)
 
             fmt.Println(res)
             fmt.Println(string(body))
-          } 
+
+          }
       - lang: 'php'
         source: |
-          /**
-          * Requires libcurl
-          */
-
-          $query = array(
-            "client_id" => "string",
-            "response_type" => "code",
-            "scope" => "openid",
-            "prompt" => "login",
-            "redirect_uri" => "string",
-            "state" => "string"
-          );
+          <?php
 
           $curl = curl_init();
 
           curl_setopt_array($curl, [
-            CURLOPT_URL => "https://vendor-api-staging.jumia.com/login?" . http_build_query($query),
+            CURLOPT_URL => "https://vendor-api-staging.jumia.com/login?client_id=18dbd821-a001-4466-aa40-3dbed5b640da&response_type=code&scope=openid&prompt=login&redirect_uri=http%3A%2F%2Flocalhost%2Ftoken",
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_POSTFIELDS => "",
           ]);
 
           $response = curl_exec($curl);
-          $error = curl_error($curl);
+          $err = curl_error($curl);
 
           curl_close($curl);
 
-          if ($error) {
-            echo "cURL Error #:" . $error;
+          if ($err) {
+            echo "cURL Error #:" . $err;
           } else {
             echo $response;
-          }                      
+          }                     
   /Application Redirect URI:
     get:
       summary: Redirect to your URI with the Authorization Code
@@ -8735,128 +8680,78 @@ paths:
 
           url = "https://vendor-api-staging.jumia.com/token"
 
-          payload = {
-            "client_id": "string",
-            "client_secret\t": "string",
-            "grant_type": "authorization_code",
-            "code": "A valid Authorization Code",
-            "redirect_uri": "http://example.com",
-            "refresh_token": "A valid Refresh Token"
-          }
+          payload = "client_id=8702c6f1-7868-4be2-a52b-6fd13b61499e&grant_type=refresh_token&refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiYTZkNTJjOS1mYTU4LTRiMzItYmU0OC00NDk1ZWNkODUxYTkifQ.eyJqdGkiOiI3NzcyMjllOS1hMmRiLTQzZGMtYjNhOS0yNzkyNTI0NzA5ZTUiLCJleHAiOjE3MTkwNjk0NTIsIm5iZiI6MCwiaWF0IjoxNjg3NTMzNDUyLCJpc3MiOiJodHRwczovL3ZlbmRvci1hcGktc3RhZ2luZy5qdW1pYS5jb20vYXV0aC9yZWFsbXMvYWNsIiwiYXVkIjoiaHR0cHM6Ly92ZW5kb3ItYXBpLXN0YWdpbmcuanVtaWEuY29tL2F1dGgvcmVhbG1zL2FjbCIsInN1YiI6ImQ5ZTE3M2Y4LTZkNWEtNGJlZC1iMjRiLTBkZjk4M2IyMjc4ZCIsInR5cCI6IlJlZnJlc2giLCJhenAiOiI4NzAyYzZmMS03ODY4LTRiZTItYTUyYi02ZmQxM2I2MTQ5OWUiLCJhdXRoX3RpbWUiOjAsInNlc3Npb25fc3RhdGUiOiIyZGRlMTUxNS03YjI4LTQzNTAtYmEyMi01ODExMzE3OGFlZTEiLCJzY29wZSI6InByb2ZpbGUgZW1haWwifQ.y4ZW4Iy6TzX2Mgzlm45HXep22NGSVPiL73lKgwnBxs0"
+          headers = {"Content-Type": "application/x-www-form-urlencoded"}
 
-          headers = {"Content-Type": "application/json"}
+          response = requests.request("POST", url, data=payload, headers=headers)
 
-          response = requests.post(url, json=payload, headers=headers)
-
-          data = response.json()
-          print(data)
+          print(response.text)
       - lang: 'java'
         source: |
-          import java.net.*;
-          import java.net.http.*;
-          import java.util.*;
-
-          public class App {
-            public static void main(String[] args) throws Exception {
-              var httpClient = HttpClient.newBuilder().build();
-
-              var payload = String.join("\n"
-                , "{"
-                , " \"client_id\": \"string\","
-                , " \"client_secret\t\": \"string\","
-                , " \"grant_type\": \"authorization_code\","
-                , " \"code\": \"A valid Authorization Code\","
-                , " \"redirect_uri\": \"http://example.com\","
-                , " \"refresh_token\": \"A valid Refresh Token\""
-                , "}"
-              );
-
-              var host = "https://vendor-api-staging.jumia.com";
-              var pathname = "/token";
-              var request = HttpRequest.newBuilder()
-                .POST(HttpRequest.BodyPublishers.ofString(payload))
-                .uri(URI.create(host + pathname ))
-                .header("Content-Type", "application/json")
-                .build();
-
-              var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-              System.out.println(response.body());
-            }
-          }
+          HttpRequest request = HttpRequest.newBuilder()
+              .uri(URI.create("https://vendor-api-staging.jumia.com/token"))
+              .header("Content-Type", "application/x-www-form-urlencoded")
+              .method("POST", HttpRequest.BodyPublishers.ofString("client_id=8702c6f1-7868-4be2-a52b-6fd13b61499e&grant_type=refresh_token&refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiYTZkNTJjOS1mYTU4LTRiMzItYmU0OC00NDk1ZWNkODUxYTkifQ.eyJqdGkiOiI3NzcyMjllOS1hMmRiLTQzZGMtYjNhOS0yNzkyNTI0NzA5ZTUiLCJleHAiOjE3MTkwNjk0NTIsIm5iZiI6MCwiaWF0IjoxNjg3NTMzNDUyLCJpc3MiOiJodHRwczovL3ZlbmRvci1hcGktc3RhZ2luZy5qdW1pYS5jb20vYXV0aC9yZWFsbXMvYWNsIiwiYXVkIjoiaHR0cHM6Ly92ZW5kb3ItYXBpLXN0YWdpbmcuanVtaWEuY29tL2F1dGgvcmVhbG1zL2FjbCIsInN1YiI6ImQ5ZTE3M2Y4LTZkNWEtNGJlZC1iMjRiLTBkZjk4M2IyMjc4ZCIsInR5cCI6IlJlZnJlc2giLCJhenAiOiI4NzAyYzZmMS03ODY4LTRiZTItYTUyYi02ZmQxM2I2MTQ5OWUiLCJhdXRoX3RpbWUiOjAsInNlc3Npb25fc3RhdGUiOiIyZGRlMTUxNS03YjI4LTQzNTAtYmEyMi01ODExMzE3OGFlZTEiLCJzY29wZSI6InByb2ZpbGUgZW1haWwifQ.y4ZW4Iy6TzX2Mgzlm45HXep22NGSVPiL73lKgwnBxs0"))
+              .build();
+          HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+          System.out.println(response.body());
       - lang: 'go'
         source: |
           package main
 
           import (
             "fmt"
-            "bytes"
+            "strings"
             "net/http"
             "io/ioutil"
           )
 
           func main() {
-            reqUrl := "https://vendor-api-staging.jumia.com/token"
-            var data = []byte(`{
-              "client_id": "string",
-              "client_secret\t": "string",
-              "grant_type": "authorization_code",
-              "code": "A valid Authorization Code",
-              "redirect_uri": "http://example.com",
-              "refresh_token": "A valid Refresh Token"
-            }`)
-            req, err := http.NewRequest("POST", reqUrl, bytes.NewBuffer(data))
-            if err != nil {
-              panic(err)
-            }
-            req.Header.Add("Content-Type", "application/json")
-            res, err := http.DefaultClient.Do(req)
-            if err != nil {
-              panic(err)
-            }
+
+            url := "https://vendor-api-staging.jumia.com/token"
+
+            payload := strings.NewReader("client_id=8702c6f1-7868-4be2-a52b-6fd13b61499e&grant_type=refresh_token&refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiYTZkNTJjOS1mYTU4LTRiMzItYmU0OC00NDk1ZWNkODUxYTkifQ.eyJqdGkiOiI3NzcyMjllOS1hMmRiLTQzZGMtYjNhOS0yNzkyNTI0NzA5ZTUiLCJleHAiOjE3MTkwNjk0NTIsIm5iZiI6MCwiaWF0IjoxNjg3NTMzNDUyLCJpc3MiOiJodHRwczovL3ZlbmRvci1hcGktc3RhZ2luZy5qdW1pYS5jb20vYXV0aC9yZWFsbXMvYWNsIiwiYXVkIjoiaHR0cHM6Ly92ZW5kb3ItYXBpLXN0YWdpbmcuanVtaWEuY29tL2F1dGgvcmVhbG1zL2FjbCIsInN1YiI6ImQ5ZTE3M2Y4LTZkNWEtNGJlZC1iMjRiLTBkZjk4M2IyMjc4ZCIsInR5cCI6IlJlZnJlc2giLCJhenAiOiI4NzAyYzZmMS03ODY4LTRiZTItYTUyYi02ZmQxM2I2MTQ5OWUiLCJhdXRoX3RpbWUiOjAsInNlc3Npb25fc3RhdGUiOiIyZGRlMTUxNS03YjI4LTQzNTAtYmEyMi01ODExMzE3OGFlZTEiLCJzY29wZSI6InByb2ZpbGUgZW1haWwifQ.y4ZW4Iy6TzX2Mgzlm45HXep22NGSVPiL73lKgwnBxs0")
+
+            req, _ := http.NewRequest("POST", url, payload)
+
+            req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+
+            res, _ := http.DefaultClient.Do(req)
+
             defer res.Body.Close()
-            body, err := ioutil.ReadAll(res.Body)
-            if err != nil {
-              panic(err)
-            }
+            body, _ := ioutil.ReadAll(res.Body)
 
             fmt.Println(res)
             fmt.Println(string(body))
+
           }
       - lang: 'php'
         source: |
-          /**
-          * Requires libcurl
-          */
+          <?php
 
           $curl = curl_init();
 
-          $payload = array(
-            "client_id" => "string",
-            ""client_secret	"" => "string",
-            "grant_type" => "authorization_code",
-            "code" => "A valid Authorization Code",
-            "redirect_uri" => "http://example.com",
-            "refresh_token" => "A valid Refresh Token"
-          );
-
           curl_setopt_array($curl, [
-            CURLOPT_HTTPHEADER => [
-              "Content-Type: application/json"
-            ],
-            CURLOPT_POSTFIELDS => json_encode($payload),
             CURLOPT_URL => "https://vendor-api-staging.jumia.com/token",
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => "client_id=8702c6f1-7868-4be2-a52b-6fd13b61499e&grant_type=refresh_token&refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiYTZkNTJjOS1mYTU4LTRiMzItYmU0OC00NDk1ZWNkODUxYTkifQ.eyJqdGkiOiI3NzcyMjllOS1hMmRiLTQzZGMtYjNhOS0yNzkyNTI0NzA5ZTUiLCJleHAiOjE3MTkwNjk0NTIsIm5iZiI6MCwiaWF0IjoxNjg3NTMzNDUyLCJpc3MiOiJodHRwczovL3ZlbmRvci1hcGktc3RhZ2luZy5qdW1pYS5jb20vYXV0aC9yZWFsbXMvYWNsIiwiYXVkIjoiaHR0cHM6Ly92ZW5kb3ItYXBpLXN0YWdpbmcuanVtaWEuY29tL2F1dGgvcmVhbG1zL2FjbCIsInN1YiI6ImQ5ZTE3M2Y4LTZkNWEtNGJlZC1iMjRiLTBkZjk4M2IyMjc4ZCIsInR5cCI6IlJlZnJlc2giLCJhenAiOiI4NzAyYzZmMS03ODY4LTRiZTItYTUyYi02ZmQxM2I2MTQ5OWUiLCJhdXRoX3RpbWUiOjAsInNlc3Npb25fc3RhdGUiOiIyZGRlMTUxNS03YjI4LTQzNTAtYmEyMi01ODExMzE3OGFlZTEiLCJzY29wZSI6InByb2ZpbGUgZW1haWwifQ.y4ZW4Iy6TzX2Mgzlm45HXep22NGSVPiL73lKgwnBxs0",
+            CURLOPT_HTTPHEADER => [
+              "Content-Type: application/x-www-form-urlencoded"
+            ],
           ]);
 
           $response = curl_exec($curl);
-          $error = curl_error($curl);
+          $err = curl_error($curl);
 
           curl_close($curl);
 
-          if ($error) {
-            echo "cURL Error #:" . $error;
+          if ($err) {
+            echo "cURL Error #:" . $err;
           } else {
             echo $response;
           }
