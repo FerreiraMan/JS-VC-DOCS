@@ -25,3 +25,5 @@ http://localhost:5500/
  It describes the endpoints, request/response payloads, and authentication mechanisms, if applicable. 
  
  The specification adheres to the [OpenAPI Specification (OAS) standard](https://swagger.io/specification/), allowing easy integration with various tools and frameworks.
+
+ The code snippets included on the specification were generated on Kong's open-source, cross-platform API client [Insonmia](https://github.com/Kong/insomnia).
