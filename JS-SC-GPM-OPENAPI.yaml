@@ -458,35 +458,21 @@ paths:
 
             url = "https://vendor-api-staging.jumia.com/shops"
 
-            headers = {"Authorization": "string"}
+            payload = ""
+            headers = {"Authorization": "Bearer "}
 
-            response = requests.get(url, headers=headers)
+            response = requests.request("GET", url, data=payload, headers=headers)
 
-            data = response.json()
-            print(data)
+            print(response.text)
         - lang: 'java'
           source: | 
-            import java.net.*;
-            import java.net.http.*;
-            import java.util.*;
-
-            public class App {
-              public static void main(String[] args) throws Exception {
-                var httpClient = HttpClient.newBuilder().build();
-
-                var host = "https://vendor-api-staging.jumia.com";
-                var pathname = "/shops";
-                var request = HttpRequest.newBuilder()
-                  .GET()
-                  .uri(URI.create(host + pathname ))
-                  .header("Authorization", "string")
-                  .build();
-
-                var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-                System.out.println(response.body());
-              }
-            }
+            HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://vendor-api-staging.jumia.com/shops"))
+                .header("Authorization", "Bearer ")
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(response.body());
         - lang: 'go'
           source: | 
             package main
@@ -498,40 +484,49 @@ paths:
             )
 
             func main() {
-              reqUrl := "https://vendor-api-staging.jumia.com/shops"
-              req, _ := http.NewRequest("GET", reqUrl, nil)
-              req.Header.Add("Authorization", "string")
+
+              url := "https://vendor-api-staging.jumia.com/shops"
+
+              req, _ := http.NewRequest("GET", url, nil)
+
+              req.Header.Add("Authorization", "Bearer ")
+
               res, _ := http.DefaultClient.Do(req)
+
               defer res.Body.Close()
               body, _ := ioutil.ReadAll(res.Body)
 
               fmt.Println(res)
               fmt.Println(string(body))
+
             }
         - lang: 'php'
           source: | 
-            /**
-            * Requires libcurl
-            */
+            <?php
 
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-              CURLOPT_HTTPHEADER => [
-                "Authorization: string"
-              ],
               CURLOPT_URL => "https://vendor-api-staging.jumia.com/shops",
               CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 30,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "GET",
+              CURLOPT_POSTFIELDS => "",
+              CURLOPT_HTTPHEADER => [
+                "Authorization: Bearer "
+              ],
             ]);
 
             $response = curl_exec($curl);
-            $error = curl_error($curl);
+            $err = curl_error($curl);
 
             curl_close($curl);
 
-            if ($error) {
-              echo "cURL Error #:" . $error;
+            if ($err) {
+              echo "cURL Error #:" . $err;
             } else {
               echo $response;
             }
