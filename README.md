@@ -17,8 +17,11 @@ and it should also automatically open a tab on your browser which address is 127
 If your browser doesn't open automatically, you can manually go to either one of the following:
  ```console
 127.0.0.1:5500 
+```
+ ```console
 http://localhost:5500/
 ```
+
  ## API specification
  The API specification is provided in YAML format (some information in HTML or CSS in order to improve UX) and can be found in the **JS-SC-GPM-OPENAPI.yaml** file. 
  
