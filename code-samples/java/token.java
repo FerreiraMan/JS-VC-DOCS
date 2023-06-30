@@ -1,0 +1,7 @@
+HttpRequest request = HttpRequest.newBuilder()
+    .uri(URI.create("https://vendor-api-staging.jumia.com/token"))
+    .header("Content-Type", "application/x-www-form-urlencoded")
+    .method("POST", HttpRequest.BodyPublishers.ofString("client_id=8702c6f1-7868-4be2-a52b-6fd13b61499e&grant_type=refresh_token&refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJiYTZkNTJjOS1mYTU4LTRiMzItYmU0OC00NDk1ZWNkODUxYTkifQ.eyJqdGkiOiI3NzcyMjllOS1hMmRiLTQzZGMtYjNhOS0yNzkyNTI0NzA5ZTUiLCJleHAiOjE3MTkwNjk0NTIsIm5iZiI6MCwiaWF0IjoxNjg3NTMzNDUyLCJpc3MiOiJodHRwczovL3ZlbmRvci1hcGktc3RhZ2luZy5qdW1pYS5jb20vYXV0aC9yZWFsbXMvYWNsIiwiYXVkIjoiaHR0cHM6Ly92ZW5kb3ItYXBpLXN0YWdpbmcuanVtaWEuY29tL2F1dGgvcmVhbG1zL2FjbCIsInN1YiI6ImQ5ZTE3M2Y4LTZkNWEtNGJlZC1iMjRiLTBkZjk4M2IyMjc4ZCIsInR5cCI6IlJlZnJlc2giLCJhenAiOiI4NzAyYzZmMS03ODY4LTRiZTItYTUyYi02ZmQxM2I2MTQ5OWUiLCJhdXRoX3RpbWUiOjAsInNlc3Npb25fc3RhdGUiOiIyZGRlMTUxNS03YjI4LTQzNTAtYmEyMi01ODExMzE3OGFlZTEiLCJzY29wZSI6InByb2ZpbGUgZW1haWwifQ.y4ZW4Iy6TzX2Mgzlm45HXep22NGSVPiL73lKgwnBxs0"))
+    .build();
+HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+System.out.println(response.body());

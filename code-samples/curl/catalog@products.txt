@@ -1,0 +1,3 @@
+curl -i -X GET \
+    'https://vendor-api-staging.jumia.com/catalog/products?token=string&size=10&sids=0&categoryCode=0&createdAtFrom=2020-09-15&createdAtTo=2020-09-15&sellerSku=string&shopId=497f6eca-6276-4993-bfeb-53cbbbba6f08' \
+    -H 'Authorization: string'

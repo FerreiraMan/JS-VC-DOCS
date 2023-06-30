@@ -1,0 +1,3 @@
+curl -i -X GET \
+    'https://vendor-api-staging.jumia.com/consignment-stock?businessClientCode=string&sku=string' \
+    -H 'Authorization: string'

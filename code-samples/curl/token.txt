@@ -1,0 +1,11 @@
+curl -i -X POST \
+https://vendor-api-staging.jumia.com/token \
+-H 'Content-Type: application/json' \
+-d '{
+    "client_id": "string",
+    "client_secret\t": "string",
+    "grant_type": "authorization_code",
+    "code": "A valid Authorization Code",
+    "redirect_uri": "http://example.com",
+    "refresh_token": "A valid Refresh Token"
+}'

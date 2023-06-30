@@ -1,0 +1,175 @@
+get:
+  summary: Get Shops of MasterShop
+  tags:
+    - Shops
+  responses:
+    '200':
+      description: OK. The request was successful.
+      headers: {}
+      content:
+        application/json:
+          schema:
+            type: object
+            x-examples:
+              Example 1:
+                shops:
+                  - id: b16aac6d-4b08-45ab-b8be-baf11615f400
+                    name: Shop Name 1 Test
+                    email: shop1.test@shop.com
+                    businessClients:
+                      - name: Jumia
+                        code: jumia-ng
+                        countryCode: NG
+                        countryName: Nigeria
+                        status: ACTIVE
+                        shortCode: NG100S9
+                      - name: Jumia
+                        code: jumia-eg
+                        countryCode: EG
+                        countryName: Egypt
+                        status: INACTIVE
+                        shortCode: EG100S9
+                  - id: 136c3781-33e0-4e31-96cd-d51a55868c1b
+                    name: Shop Name 2 Test
+                    email: shop2.test@shop.com
+                    businessClients:
+                      - name: Jumia
+                        code: jumia-ng
+                        countryCode: NG
+                        countryName: Nigeria
+                        status: ACTIVE
+                        shortCode: NG100S7
+            properties:
+              shops:
+                type: array
+                description: List of shops.
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      description: Shop Id.
+                    name:
+                      type: string
+                      description: Shop Name.
+                    email:
+                      type: string
+                      description: Shop Registration E-mail.
+                    businessClients:
+                      type: array
+                      description: List of Business Clients / Countries
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            description: Business Client Name. Jumia or Zando
+                          code:
+                            type: string
+                            description: 'Business Client Code. Example: jumia-ng, zando-za'
+                          countryCode:
+                            type: string
+                            description: 'International ISO Country Code according to https://countrycode.org'
+                          countryName:
+                            type: string
+                            description: Country name.
+                          status:
+                            type: string
+                            description: Business Client Status. ACTIVE or INACTIVE
+                          shortCode:
+                            type: string
+                            description: Business Client Short Code
+                        required:
+                          - name
+                          - code
+                          - countryCode
+                          - countryName
+                          - status
+                          - shortCode
+                  required:
+                    - id
+                    - name
+                    - email
+                    - businessClients
+            required:
+              - shops
+            title: shops
+          examples:
+            Success Response - Payload Example:
+              value:
+                shops:
+                  - id: b16aac6d-4b08-45ab-b8be-baf11615f400
+                    name: Shop Name 1 Test
+                    email: shop1.test@shop.com
+                    businessClients:
+                      - name: Jumia
+                        code: jumia-ng
+                        countryCode: NG
+                        countryName: Nigeria
+                        status: ACTIVE
+                        shortCode: NG100S9
+                      - name: Jumia
+                        code: jumia-eg
+                        countryCode: EG
+                        countryName: Egypt
+                        status: INACTIVE
+                        shortCode: EG100S9
+                  - id: 136c3781-33e0-4e31-96cd-d51a55868c1b
+                    name: Shop Name 2 Test
+                    email: shop2.test@shop.com
+                    businessClients:
+                      - name: Jumia
+                        code: jumia-ng
+                        countryCode: NG
+                        countryName: Nigeria
+                        status: ACTIVE
+                        shortCode: NG100S7
+    '400':
+      description: Bad Request. There was a problem with the request payload. Either a field is missing or a field type is not compliant with the contract.
+    '401':
+      description: Unauthorized. The client could not be correctly authenticated.
+    '403':
+      description: Forbidden. The client is authenticated but does not have permission to the endpoint.
+    '404':
+      description: Not Found. The URL or resource doesn't exist.
+    '405':
+      description: Method Not Allowed. The requested HTTP method is not allowed for the endpoint.
+    '500':
+      description: Internal Server Error. An unexpected internal error has occurred in the server.
+    '501':
+      description: Not Implemented. The Global Order Feature is not enabled.
+  operationId: get-shops-of-master-shop
+  description: |-
+    Get all  shops under the authenticated User and if this shops has master shops associate master shop shops.
+
+    **Paginated:** No need since the list of Shops is usually less than 100 records.
+
+    
+    **Comments:**
+    <ul>
+      <li>Follow the same API URL pattern than VCS with /api/vendors. For instance, get Orders: /api/vendor/orders</li>
+    </ul>
+  parameters:
+    - schema:
+        type: string
+      in: header
+      name: Authorization
+      description: JWT Token generated by Keycloak and Application ID
+      required: true
+  x-codeSamples:
+    - lang: 'curl'
+      source: 
+        $ref: '../code-samples/curl/shops-of-master-shop.txt'      
+    - lang: 'python'
+      source: 
+        $ref: '../code-samples/python/shops-of-master-shop.py'      
+    - lang: 'java'
+      source:
+        $ref: '../code-samples/java/shops-of-master-shop.java'       
+    - lang: 'go'
+      source: 
+        $ref: '../code-samples/go/shops-of-master-shop.go'      
+    - lang: 'php'
+      source: 
+        $ref: '../code-samples/php/shops-of-master-shop.php'

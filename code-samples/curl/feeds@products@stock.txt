@@ -1,0 +1,18 @@
+curl -i -X POST \
+    https://vendor-api-staging.jumia.com/feeds/products/stock \
+    -H 'Authorization: string' \
+    -H 'Content-Type: application/json' \
+    -d '{
+    "products": [
+        {
+        "sellerSku": "8682447314708",
+        "id": "07c390ae-d58a-42a2-8ec6-5051bca18cab",
+        "stock": 100
+        },
+        {
+        "sellerSku": "8682447314709",
+        "id": "07c390ae-d58a-42a2-8ec6-5051bca19cab",
+        "stock": 50
+        }
+    ]
+    }'

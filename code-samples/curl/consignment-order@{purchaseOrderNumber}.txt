@@ -1,0 +1,12 @@
+curl -i -X PATCH \
+    'https://vendor-api-staging.jumia.com/consignment-order/{purchaseOrderNumber}?purchaseOrderNumber=purchaseOrderNumber%3D123abc' \
+    -H 'Authorization: string' \
+    -H 'Content-Type: application/json' \
+    -d '{
+    "isShipped": true,
+    "trackingNumber": "string",
+    "actualDepartureDate": "2022-02-01T17:51:03.413Z",
+    "estimatedArrivalDate": "2022-02-01T17:51:03.413Z",
+    "deliveryAgentPhoneNumber": "string",
+    "3plName": "string"
+    }'

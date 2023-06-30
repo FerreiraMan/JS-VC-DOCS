@@ -1,0 +1,97 @@
+get:
+  summary: Start the Authorization Code Flow
+  tags:
+    - Endpoints
+  responses:
+    '200':
+      description: 'OK. After a successful login, the user is redirected to RedirectURI.'
+    '400':
+      description: |+
+        Bad Request. There was a problem with the request payload. Either a field is missing or a field type is not compliant with the contract.
+
+    '401':
+      description: |+
+        Unauthorized. The client could not be correctly authenticated.
+
+    '403':
+      description: |+
+        Forbidden. The client is authenticated but does not have permission to the endpoint.
+
+    '404':
+      description: |+
+        Not Found. The URL or resource doesn't exist.
+
+    '405':
+      description: |+
+        Method Not Allowed. The requested HTTP method is not allowed for the endpoint.
+
+    '500':
+      description: |+
+        Internal Server Error. An unexpected internal error has occurred in the server.
+
+    '501':
+      description: |+
+        Not Implemented. The Global Order Feature is not enabled.
+
+  operationId: get-login
+  description: |-
+    You should redirect to our Authorization Server URL in order to start the Authorization code Flow.
+
+    This Endpoint is only used on the Web Authorization Flow.
+
+    After a successful login, the user is redirected to [RedirectURI](#tag/Endpoints/operation/get-Application-Redirect-URI), which is documented below.
+  parameters:
+    - schema:
+        type: string
+      in: query
+      name: client_id
+      required: true
+      description: Your Application Client Id attribute
+    - schema:
+        type: string
+        enum:
+          - code
+      in: query
+      name: response_type
+      required: true
+    - schema:
+        type: string
+        enum:
+          - openid
+      in: query
+      name: scope
+      required: true
+    - schema:
+        type: string
+        enum:
+          - login
+      in: query
+      name: prompt
+      required: true
+    - schema:
+        type: string
+      in: query
+      name: redirect_uri
+      required: true
+      description: Should be the same that you previously configured on your Application.
+    - schema:
+        type: string
+      in: query
+      name: state
+      description: 'Optional value. If present, the same value will be returned on the RedirectURI.'
+  x-codeSamples:
+  - lang: 'curl'
+    source:
+      $ref: '../code-samples/curl/login.txt'      
+  - lang: 'python'
+    source: 
+      $ref: '../code-samples/python/login.py'      
+  - lang: 'java'
+    source: 
+      $ref: '../code-samples/java/login.java'      
+  - lang: 'go'
+    source: 
+      $ref: '../code-samples/go/login.go'      
+  - lang: 'php'
+    source: 
+      $ref: '../code-samples/php/login.php'      

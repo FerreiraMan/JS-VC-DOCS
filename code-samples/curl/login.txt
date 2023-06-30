@@ -1,0 +1,2 @@
+curl -i -X GET \
+    'https://vendor-api-staging.jumia.com/login?client_id=string&response_type=code&scope=openid&prompt=login&redirect_uri=string&state=string'

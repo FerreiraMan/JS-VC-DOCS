@@ -1,0 +1,17 @@
+curl -i -X POST \
+    https://vendor-api-staging.jumia.com/consignment-order \
+    -H 'Authorization: string' \
+    -H 'Content-Type: application/json' \
+    -d '{
+    "shopId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "businessClientCode": "jumia-ma",
+    "shippingDate": "2022-03-25T10:09:00",
+    "comment": "small comment",
+    "products": [
+        {
+        "sku": "143354654",
+        "quantity": 1,
+        "labelCode": "product-a"
+        }
+    ]
+    }'

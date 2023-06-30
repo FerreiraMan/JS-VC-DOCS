@@ -1,0 +1,37 @@
+get:
+  summary: Redirect to your URI with the Authorization Code
+  servers:
+    - url: 'https://{redirect_uri}'
+      variables:
+        redirect_uri: 
+          default: redirect_uri
+          description: Redirect URI to which our authorization server will send the authorization code, after the login prompt.
+  tags:
+    - Endpoints
+  responses:
+    '200':
+      description: OK. The request was successful.
+  operationId: get-Application-Redirect-URI
+  description: |-
+    As the second step of the Authorization Flow, our Authorization Server will send the GET request to your Redirect URI.
+
+    Then, you will receive an Authorization Code to exchange to a new valid Access Token. Please check the [POST - Obtain an Access Token from Authorization Code](#tag/Endpoints/operation/post-token) below.
+  parameters:
+    - schema:
+        type: string
+      in: header
+      name: session_state
+      required: true
+      description: An unique identifier of the new session.
+    - schema:
+        type: string
+      in: header
+      name: code
+      required: true
+      description: |-
+        The Authorization Code that you need for the next step to get an Access Token. This token is also needed when the Access Token expires.
+    - schema:
+        type: string
+      in: header
+      name: state
+      description: The same value that you sent in the previous request  

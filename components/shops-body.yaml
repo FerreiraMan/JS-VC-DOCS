@@ -1,0 +1,88 @@
+schemas:
+  shops:
+    type: object
+    x-examples:
+      Example 1:
+        shops:
+          - id: b16aac6d-4b08-45ab-b8be-baf11615f400
+            name: Shop Name 1 Test
+            email: shop1.test@shop.com
+            businessClients:
+              - name: Jumia
+                code: jumia-ng
+                countryCode: NG
+                countryName: Nigeria
+                status: ACTIVE
+                shortCode: NG100S9
+              - name: Jumia
+                code: jumia-eg
+                countryCode: EG
+                countryName: Egypt
+                status: INACTIVE
+                shortCode: EG100S9
+          - id: 136c3781-33e0-4e31-96cd-d51a55868c1b
+            name: Shop Name 2 Test
+            email: shop2.test@shop.com
+            businessClients:
+              - name: Jumia
+                code: jumia-ng
+                countryCode: NG
+                countryName: Nigeria
+                status: ACTIVE
+                shortCode: NG100S7
+    properties:
+      shops:
+        type: array
+        description: List of shops.
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              description: Shop Id.
+            name:
+              type: string
+              description: Shop Name.
+            email:
+              type: string
+              description: Shop Registration E-mail.
+            businessClients:
+              type: array
+              description: List of Business Clients / Countries
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Business Client Name. Jumia or Zando
+                  code:
+                    type: string
+                    description: 'Business Client Code. Example: jumia-ng, zando-za'
+                  countryCode:
+                    type: string
+                    description: 'International ISO Country Code according to https://countrycode.org'
+                  countryName:
+                    type: string
+                    description: Country name.
+                  status:
+                    type: string
+                    description: Business Client Status. ACTIVE or INACTIVE
+                  shortCode:
+                    type: string
+                    description: Business Client Short Code
+                required:
+                  - name
+                  - code
+                  - countryCode
+                  - countryName
+                  - status
+                  - shortCode
+          required:
+            - id
+            - name
+            - email
+            - businessClients
+    required:
+      - shops
+    title: shops

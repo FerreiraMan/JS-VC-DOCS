@@ -1,0 +1,354 @@
+parameters:
+  - schema:
+      type: string
+      format: uuid
+    name: id
+    in: path
+    required: true
+    description: Attribute Set ID of the desired list of Attributes.
+get:
+  summary: Get Attributes
+  tags:
+    - Catalog
+  responses:
+    '200':
+      description: OK. The request was successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            x-examples:
+              Example 1:
+                attributes:
+                  - sid: bac3047c-f2a3-46bc-864a-efce8d7cfb1b
+                    code: '1000082'
+                    name: package_content
+                    description: Whats in the box?
+                    type: '4'
+                    mandatory: true
+                    variation: false
+                    translatable: true
+                    translations:
+                      - languageId: EN
+                        languageCode: EN
+                        translation: Whats in the box?
+                      - languageId: EN
+                        languageCode: AR
+                        translation: Whats in the box?
+                      - languageId: EN
+                        languageCode: FR
+                        translation: Whats in the box?
+                  - code: '1000256'
+                    name: age_range
+                    description: Age Range
+                    type: '0'
+                    mandatory: true
+                    variation: false
+                    translatable: false
+                    translations: []
+                    options:
+                      - id: 01d04b74-73d5-460c-a884-0fdeb66f6094
+                        name: Digital
+                        position: 1
+                        isDefault: false
+                      - id: 01d10986-2a29-4b63-8310-c2f33ba1e14b
+                        name: Hard back
+                        position: 2
+                        isDefault: false
+                      - id: 01d28647-99ee-46ec-9812-70e2b0e821e3
+                        name: Paperback
+                        position: 3
+                        isDefault: false
+                    validations:
+                      - '123': 1
+                        teste: 01d04b74-73d5-460c-a884-0fdeb66f6094
+            properties:
+              attributes:
+                type: array
+                description: List of Attributes.
+                items:
+                  type: object
+                  properties:
+                    sid:
+                      type: string
+                      description: Attribute identifier.
+                      format: uuid
+                    code:
+                      type: number
+                      description: Attribute Id.
+                    name:
+                      type: string
+                      description: Attribute Name.
+                    description:
+                      type: string
+                      description: Attribute Description.
+                    type:
+                      type: string
+                      description: Check the Attribute types table below.
+                    mandatory:
+                      type: boolean
+                      description: Define if the attribute is mandatory.
+                    variation:
+                      type: boolean
+                      description: Define if the attribute is the variation of Product Sets.
+                    translatable:
+                      type: boolean
+                      description: Define if the attribute has description translations.
+                    translations:
+                      type: array
+                      description: List of Descriptions translated to the target language.
+                      items:
+                        type: object
+                        properties:
+                          languageId:
+                            type: number
+                            description: Translation Id.
+                          languageCode:
+                            type: string
+                            description: 'Available languages: EN, FR and AR.'
+                          translation:
+                            type: string
+                            description: Translation.
+                        required:
+                          - languageCode
+                          - translation
+                    options:
+                      type: array
+                      description: List of attribute options when the attribute is SELECTION or MULTI_SELECTION
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            description: Attribute Option identifier.
+                            format: uuid
+                          name:
+                            type: string
+                            description: Attribute Option value.
+                          position:
+                            type: number
+                            description: Attribute Option position.
+                          isDefault:
+                            type: boolean
+                            description: Define if the Attribute Option is the default option.
+                        required:
+                          - id
+                          - name
+                          - position
+                          - isDefault
+                    validations:
+                      type: array
+                      description: List of attribute validations when the attribute is requested
+                      items:
+                        type: object
+                        properties:
+                          DateFormat:
+                            type: string
+                            x-stoplight:
+                              id: e9dm8yeb8jtqc
+                            description: Validate the attribute  Date Format
+                          DecimalPlaces:
+                            type: number
+                            x-stoplight:
+                              id: 9rr4ghjc3vdm6
+                            description: Validate the  attribute Decimal Places
+                          MaxLength:
+                            type: number
+                            x-stoplight:
+                              id: cbgu3y0psbyn2
+                            description: Validate the  attribute Max Length
+                          MinLength:
+                            type: number
+                            x-stoplight:
+                              id: gub5ret9xqh60
+                            description: Validate the  attribute Min Length
+                          Percentage:
+                            type: boolean
+                            x-stoplight:
+                              id: ar3mwgpm0pqgd
+                            description: Validate the  attribute Percentage
+                          NotZeroOrNegative:
+                            type: boolean
+                            x-stoplight:
+                              id: 0i72kkat8sk4k
+                            description: Validate the  attribute is Not Zero Or Negative
+                          SelectedByDefault:
+                            type: boolean
+                            x-stoplight:
+                              id: 9fqv696xzvl1a
+                            description: Attribute validation selected by default
+                        required:
+                          - DateFormat
+                          - DecimalPlaces
+                          - MaxLength
+                          - MinLength
+                          - Percentage
+                          - NotZeroOrNegative
+                          - SelectedByDefault
+                  required:
+                    - code
+                    - name
+                    - description
+                    - type
+                    - mandatory
+                    - variation
+                    - translatable
+            required:
+              - attributes
+          examples:
+            Success Response - Payload Example:
+              value:
+                attributes:
+                  - sid: bac3047c-f2a3-46bc-864a-efce8d7cfb1b
+                    code: '1000082'
+                    name: package_content
+                    description: Whats in the box?
+                    type: '4'
+                    mandatory: true
+                    variation: false
+                    translatable: true
+                    translations:
+                      - languageId: EN
+                        languageCode: EN
+                        translation: Whats in the box?
+                      - languageId: EN
+                        languageCode: AR
+                        translation: Whats in the box?
+                      - languageId: EN
+                        languageCode: FR
+                        translation: Whats in the box?
+                  - code: '1000256'
+                    name: age_range
+                    description: Age Range
+                    type: '0'
+                    mandatory: true
+                    variation: false
+                    translatable: false
+                    translations: []
+                    options:
+                      - id: 01d04b74-73d5-460c-a884-0fdeb66f6094
+                        name: Digital
+                        position: 1
+                        isDefault: false
+                      - id: 01d10986-2a29-4b63-8310-c2f33ba1e14b
+                        name: Hard back
+                        position: 2
+                        isDefault: false
+                      - id: 01d28647-99ee-46ec-9812-70e2b0e821e3
+                        name: Paperback
+                        position: 3
+                        isDefault: false
+    '400':
+      description: Bad Request. There was a problem with the request payload. Either a field is missing or a field type is not compliant with the contract.
+    '401':
+      description: Unauthorized. The client could not be correctly authenticated.
+    '403':
+      description: Forbidden. The client is authenticated but does not have permission to the endpoint.
+    '404':
+      description: Not Found. The URL or resource doesn't exist.
+      content:
+        application/json:
+          schema:
+            type: object
+            x-examples:
+              Example 1:
+                error:
+                  message: 'The Attribute Set [01d28647-99ee-46ec-9812-70e2b0e821e3] not found.'
+            properties:
+              error:
+                type: object
+                required:
+                  - message
+                properties:
+                  message:
+                    type: string
+                    description: The Error message.
+            required:
+              - error
+          examples:
+            Example 1:
+              value:
+                error:
+                  message: 'The Attribute Set [01d28647-99ee-46ec-9812-70e2b0e821e3] not found.'
+    '405':
+      description: Method Not Allowed. The requested HTTP method is not allowed for the endpoint.
+    '500':
+      description: Internal Server Error. An unexpected internal error has occurred in the server.
+    '501':
+      description: Not Implemented. The Global Order Feature is not enabled.
+  operationId: get-catalog-attribute-sets-id
+  description: |-
+    Get all active Attributes in a Given Attribute Set.
+
+
+    **Paginated:** No, returns all attributes for the given attribute set.
+
+
+    <!DOCTYPE html>
+    <html>
+    <style>
+    table, th, td {
+      border:0px solid black;
+      border-collapse: collapse;
+      padding: 10px
+    }
+    </style>
+    <body>
+
+    <table style="width:100%;">
+      <tr style="background-color: #f7f4f4">
+        <th style="text-align: center; padding: 10px">Attribute types</th>
+      </tr>
+      <tr>
+        <td style="text-align: center;">Boolean</td>
+      </tr>
+      <tr>
+        <td style="text-align: center;">DATE</td>
+      </tr>
+        <tr>
+        <td style="text-align: center;">DATE_TIME</td>
+
+      </tr>
+        <tr>
+        <td style="text-align: center;">MULTI_SELECTION</td>
+        </tr>
+      </tr>
+        <tr>
+        <td style="text-align: center;">NUMBER</td>
+      </tr>
+        </tr>
+        <tr>
+        <td style="text-align: center;">SELECTION</td>
+      </tr>
+        <tr>
+        <td style="text-align: center;">TEXT</td>
+      </tr>
+        <tr>
+        <td style="text-align: center;">TEXT_AREA</td>
+      </tr>
+    </table>
+    </body>
+    </html>
+  parameters:
+    - schema:
+        type: string
+      in: header
+      name: Authorization
+      description: JWT Token generated by Keycloak and Application ID
+      required: true
+  x-codeSamples:
+    - lang: 'curl'
+      source: 
+        $ref: '../code-samples/curl/catalog@attribute-sets@{id}.txt'      
+    - lang: 'python'
+      source: 
+        $ref: '../code-samples/python/catalog@attribute-sets@{id}.py'      
+    - lang: 'java'
+      source: 
+        $ref: '../code-samples/java/catalog@attribute-sets@{id}.java'      
+    - lang: 'go'
+      source: 
+        $ref: '../code-samples/go/catalog@attribute-sets@{id}.go'      
+    - lang: 'php'
+      source: 
+        $ref: '../code-samples/php/catalog@attribute-sets@{id}.php'      

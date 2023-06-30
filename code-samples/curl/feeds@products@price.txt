@@ -1,0 +1,48 @@
+curl -i -X POST \
+    https://vendor-api-staging.jumia.com/feeds/products/price \
+    -H 'Authorization: string' \
+    -H 'Content-Type: application/json' \
+    -d '{
+    "products": [
+        {
+        "sellerSku": "8682447314708",
+        "id": "07c390ae-d58a-42a2-8ec6-5051bca18cab",
+        "category": "1017650 - Fashion / Women'\''s Fashion / Clothing / Dresses",
+        "price": {
+            "currency": "EGP",
+            "value": 62,
+            "salePrice": {
+            "value": 55,
+            "startAt": "2021-08-11 10:30",
+            "endAt": "2030-08-07 10:30"
+            }
+        },
+        "businessClients": [
+            {
+            "businessClientCode": "jumia-ma",
+            "price": {
+                "currency": "EGP",
+                "value": 62,
+                "salePrice": {
+                "value": 55,
+                "startAt": "2021-08-11 10:30",
+                "endAt": "2030-08-07 10:30"
+                }
+            }
+            },
+            {
+            "businessClientCode": "jumia-dz",
+            "price": {
+                "currency": "EGP",
+                "value": 82,
+                "salePrice": {
+                "value": 45,
+                "startAt": "2021-08-12 10:30",
+                "endAt": "2030-08-08 10:30"
+                }
+            }
+            }
+        ]
+        }
+    ]
+    }'

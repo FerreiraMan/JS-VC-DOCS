@@ -1,0 +1,23 @@
+curl -i -X POST \
+    https://vendor-api-staging.jumia.com/feeds/products/status \
+    -H 'Authorization: string' \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "products": [
+        {
+            "sellerSku": "8682447314708",
+            "id": "07c390ae-d58a-42a2-8ec6-5051bca18cab",
+            "createdAt": "2021-08-11",
+            "businessClients": [
+            {
+                "businessClientCode": "jumia-ma",
+                "status": "ACTIVE"
+            },
+            {
+                "businessClientCode": "jumia-dz",
+                "status": "INACTIVE"
+            }
+            ]
+        }
+        ]
+}'
